@@ -1,0 +1,11 @@
+body{
+    height: 100vh;
+    margin: 0;
+    background-color: #363535 !important;
+    color: white;
+}
+
+body.loading {
+    cursor: wait !important;
+    pointer-events: none !important;
+}
