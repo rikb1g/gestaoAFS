@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block main %}
+
+<div class="container-atletas">
+    <p><strong>Nome: </strong> {{atleta_detail.nome}}</p>
+    <p><strong>Data Nascimento: </strong> {{atleta_detail.data_nascimento}}</p>
+    <p><strong>Número: </strong> {{atleta_detail.numero}}</p>
+    <p><strong>Encarregado: </strong> {{atleta_detail.encarregado}}</p>
+    <p><strong>Telefone: </strong> {{atleta_detail.telefone}}</p>
+    <p><strong>Email: </strong> {{atleta_detail.email}}</p>
+    {% if  not atleta_detail.guarda_redes %}
+    <p><strong>Guarda redes: </strong> Verdadeiro</p>
+    {% endif %}
+    <p><strong>Ficha: </strong> {{atleta_detail.ficha}}</p>
+</div>
+
+{% endblock %}

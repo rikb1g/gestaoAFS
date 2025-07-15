@@ -47,11 +47,11 @@ class AtletasTest(TestCase):
         self.assertTrue(novo.guarda_redes)
 
     def test_delete_atleta(self):
-        self.assertEqual(Atleta.objects.count(), 1)
+        self.assertEqual(Atleta.objects.count(), 2)
         response = self.cliente.post(reverse('atletas:delete_atleta', args=[self.atleta.id]))
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(Atleta.objects.count(), 0)
+        self.assertEqual(Atleta.objects.count(), 1)
 
 
 

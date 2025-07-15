@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+{% block main %}
+<div class="container-atletas">
+
+    <div class="leftcontainer">
+        teste
+    </div>
+
+    <div class="rightcontainer">
+        <div class="table-container">
+            <table class="tableAtletas">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>Número</th>
+                    <th>Encarregado</th>
+                    <th>Contacto</th>
+                    <th>Email</th>
+                    <th>Guarda-redes</th>
+                    <th>Ficha</th>
+                    <th>Operações</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for atleta in atletas %}
+                <tr>
+                    <td><a class="nomeAtleta"href="{% url 'atletas:detail_atleta' atleta.id %}">{{ atleta.nome }}</a></td>
+                    <td>{{ atleta.data_nascimento }}</td>
+                    <td>{{ atleta.numero }}</td>
+                    <td>{{ atleta.encarregado }}</td>
+                    <td>{{ atleta.telefone }}</td>
+                    <td>{{ atleta.email }}</td>
+                    <td>{{ atleta.guarda_redes }}</td>
+                    <td>{{ atleta.ficha }}</td>
+                    <td class="linha">
+                        <a href="{% url 'atletas:update_atleta' atleta.id %}"><img src="{% static 'images/edit_img.svg' %}" alt="editar atleta"></a>
+                        <a href="#" onclick="deleteAtleta('{{ atleta.id }}', '{{ atleta.nome }}');"><img src="{% static 'images/delete_img.svg' %}" alt="apagar atleta"></a>
+                        <a href=""><img src="{% static 'images/shoping_cart.svg' %}" alt="encomendar"></a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+
+            </table>
+        </div>
+
+
+
+    </div>
+    <div class="botoes">
+        <a href="{% url 'atletas:create_atleta' %}"><img src="{% static 'images/add_image.svg' %}" alt="adicionar atleta"></a>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+<script>
+    function deleteAtleta(atletaId, nomeAtleta) {
+            if(confirm("Tem certeza que deseja apagar o atelta " + nomeAtleta + "?")) {
+            window.location.href = "/atletas/delete_atleta/"+atletaId+"/";
+        }
+        else {
+        alert("Operação cancelada");
+        }
+    }
+
+
+</script>
+{% endblock %}
