@@ -10,6 +10,21 @@ body.loading {
     pointer-events: none !important;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: azure !important ;
+    border: gray;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #363535 !important;
+}
+form.placeholder{
+    color: azure !important;
+}
+
 
 .container-atletas{
     display: flex;
@@ -52,19 +67,7 @@ body.loading {
     background-color: #363535 !important;
 }
 
-input{
-    background-color: #636362 !important;
-    padding: 10px 15px;
-    border: solid 1px white;
-    border-radius: 20px;
-    color: white;
-    outline: none;
-    width: 300px;
-}
-input::placeholder{
-    color: white;
-    opacity: 1;
-}
+
 
 table {
     width: 100%;
@@ -111,4 +114,23 @@ td {
 .nomeAtleta{
     text-decoration: none !important;
     color: white!important;
+}
+
+
+select {
+    background-color: #636362!important; /* Usa a mesma cor de fundo da página */
+    color: white !important; /* Herda a cor do texto do elemento pai */
+    border: none; /* Remove borda */
+    padding: 5px; /* Espaçamento interno */
+    font-size: 1rem; /* Ajusta tamanho da fonte */
+    border-radius: 5px; /* Deixa as bordas arredondadas (opcional) */
+}
+select:focus {
+    background-color: #363535;
+    outline: none;
+    border: none;
+    color: white;
+}
+select:hover {
+    cursor: pointer;
 }

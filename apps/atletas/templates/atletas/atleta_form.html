@@ -1,29 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
-{% include 'base.html' %}
+
+{% block main %}
+
+{% include 'atletas/atleta_form_partial.html' %}
+{% endblock %}
 
 
-<div class="container text-center">
-
-
-    {% if object %}
-   <div class="text-center">Editar Atleta</div>
-    {% else %}
-    <div class="text-center">Novo Atleta</div>
-    {% endif %}
-<form method="post" class="form-control" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-secondary">Gravar entrada</button>
-
-</form>
-</div>
-
-
-<script>
-  flatpickr(".datepicker", {
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "d/m/Y",
-    locale: "pt"
-  });
-</script>

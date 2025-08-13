@@ -1,0 +1,36 @@
+
+{% load static %}
+
+
+
+
+{% if object %}
+  <div class="text-center mt-5">Editar Encomenda</div>
+   {% else %}
+   <div class="text-center mt-5">Nova Encomenda</div>
+   {% endif %}
+
+<div class="container text-center mt-5">
+
+    <form method="post" id="form-new-encomenda" class="form-control" enctype="multipart/form-data">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Dados da Encomenda</legend>
+    {{ form_encomenda.as_p }}
+  </fieldset>
+
+  <fieldset>
+    <legend>Artigo da Encomenda</legend>
+    {{ form_item.as_p }}
+  </fieldset>
+
+  <button type="submit" class="btn btn-secondary">Guardar</button>
+        </form>
+
+</div>
+
+
+<script>
+  window.urlNewEncomenda = "{% url 'equipamentos:create_encomenda_equipamentos' %}";
+  window.urlEncomendasList = "{% url 'equipamentos:encomendas_equipamentos_list' %}";
+</script>

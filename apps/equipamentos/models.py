@@ -25,96 +25,74 @@ class Equipamentos(models.Model):
     def __str__(self):
         return self.nome
 
-class EncomendaEquipamentos(models.Model):
-    atleta = models.ForeignKey(Atleta,on_delete=models.CASCADE)
-    equipamento = models.ForeignKey(Equipamentos,on_delete=models.CASCADE)
+class Encomenda(models.Model):
+    atleta = models.ForeignKey(Atleta, on_delete=models.CASCADE)
     tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE, null=True, blank=True)
-    entregue = models.BooleanField(default=False)
-    data_entrega = models.DateField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def encomenda_kit(self,atleta,tamanho):
-        encomendas_criadas = []
-        todos_equipamentos = Equipamentos.objects.all()
-        for equipamento in todos_equipamentos:
-            if equipamento.nome == "jogo principal" and not atleta.guarda_redes:
-                encomenda = EncomendaEquipamentos.objects.create(
-                    atleta=atleta,
-                    equipamento=equipamento,
-                    entregue=False,
-                    tamanho = tamanho,
-                    data_entrega=None,)
-                encomendas_criadas.append(encomenda)
-
-            elif equipamento.nome == 'guarda-redes azul' and atleta.guarda_redes:
-                encomenda =EncomendaEquipamentos.objects.create(
-                    atleta=atleta,
-                    equipamento=equipamento,
-                    entregue=False,
-                    tamanho = tamanho,
-                    data_entrega=None,)
-                encomendas_criadas.append(encomenda)
-            elif equipamento.nome == 'fato de treino':
-                encomenda = EncomendaEquipamentos.objects.create(
-                    atleta=atleta,
-                    equipamento=equipamento,
-                    entregue=False,
-                    tamanho = tamanho,
-                    data_entrega=None,)
-                encomendas_criadas.append(encomenda)
-            elif equipamento.nome == 'kit treino jogador' and not atleta.guarda_redes:
-                encomenda = EncomendaEquipamentos.objects.create(
-                    atleta=atleta,
-                    equipamento=equipamento,
-                    entregue=False,
-                    tamanho = tamanho,
-                    data_entrega=None,)
-                encomendas_criadas.append(encomenda)
-            elif equipamento.nome == 'kit treino guarda-redes' and atleta.guarda_redes:
-                encomenda = EncomendaEquipamentos.objects.create(
-                    atleta=atleta,
-                    equipamento=equipamento,
-                    entregue=False,
-                    tamanho = tamanho,
-                    data_entrega=None,)
-                encomendas_criadas.append(encomenda)
-            elif equipamento.nome == 'polo de saída':
-                encomenda = EncomendaEquipamentos.objects.create(
-                    atleta=atleta,
-                    equipamento=equipamento,
-                    entregue=False,
-                    tamanho = tamanho,
-                    data_entrega=None,)
-                encomendas_criadas.append(encomenda)
-            elif equipamento.nome == 'mochila':
-                encomenda = EncomendaEquipamentos.objects.create(
-                    atleta=atleta,
-                    equipamento=equipamento,
-                    entregue=False,
-                    tamanho = tamanho,
-                    data_entrega=None,)
-                encomendas_criadas.append(encomenda)
-        return encomendas_criadas
-    def encomendar_artigos(self,atleta,tamanho,equipamento):
-        encomenda = EncomendaEquipamentos.objects.create(
-            atleta=atleta,
-            equipamento=equipamento,
-            entregue=False,
-            tamanho = tamanho,
-            data_entrega=None,)
-        return encomenda
-
-    def encomenda_entregue(self,id_encomenda):
-        encomenda = EncomendaEquipamentos.objects.get(pk=id_encomenda)
-        encomenda.entregue = True
-        return encomenda
-
-
-
-
-
+    data_pedido = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"Encomenda para {self.Atleta}"
+        return f"Encomenda de {self.atleta} em {self.tamanho}"
 
+class EncomendaItem(models.Model):
+    encomenda = models.ForeignKey(Encomenda, on_delete=models.CASCADE,blank=True)
+    equipamento = models.ForeignKey(Equipamentos, on_delete=models.PROTECT)
+    entregue = models.BooleanField(default=False)
+    data_entrega = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Encomenda de {self.encomenda.atleta} para {self.equipamento}"
+
+
+def encomenda_kit(atleta, tamanho):
+    encomendas_criadas = []
+    todos_equipamentos = Equipamentos.objects.all()
+    for equipamento in todos_equipamentos:
+        if equipamento.nome == "jogo principal" and not atleta.guarda_redes:
+            encomenda = Encomenda.objects.create(
+                atleta=atleta,
+                tamanho = tamanho)
+            EncomendaItem.objects.create(
+                encomenda=encomenda,
+                equipamento=equipamento,
+                entregue=False)
+            encomendas_criadas.append(encomenda)
+        elif equipamento.nome == 'guarda-redes azul' and atleta.guarda_redes:
+            encomenda = Encomenda.objects.create(
+                atleta=atleta,
+                tamanho=tamanho)
+            EncomendaItem.objects.create(
+                encomenda=encomenda,
+                equipamento=equipamento,
+                entregue=False)
+        elif equipamento.nome == 'fato de treino':
+            encomenda = Encomenda.objects.create(
+                atleta=atleta,
+                tamanho=tamanho)
+            EncomendaItem.objects.create(
+                encomenda=encomenda,
+                equipamento=equipamento,
+                entregue=False)
+        elif equipamento.nome == 'kit treino jogador':
+            encomenda = Encomenda.objects.create(
+                atleta=atleta,
+                tamanho=tamanho)
+            EncomendaItem.objects.create(
+                encomenda=encomenda,
+                equipamento=equipamento,
+                entregue=False)
+        elif equipamento.nome == 'polo de saída':
+            encomenda = Encomenda.objects.create(
+                atleta=atleta,
+                tamanho=tamanho)
+            EncomendaItem.objects.create(
+                encomenda=encomenda,
+                equipamento=equipamento,
+                entregue=False)
+        elif equipamento.nome == 'mochila':
+            encomenda = Encomenda.objects.create(
+                atleta=atleta,
+                tamanho=tamanho)
+            EncomendaItem.objects.create(
+                encomenda=encomenda,
+                equipamento=equipamento,
+                entregue=False)

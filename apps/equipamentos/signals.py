@@ -27,6 +27,7 @@ def criar_equipamentos_iniciais(sender, **kwargs):
         ("Kispo", "Blusão/kispo"),
         ("calcão", "calcão"),
         ("meias", "meias de jogo"),
+        ("Kit Completo", "Kit completo"),
     ]
 
     for nome, descricao in equipamentos_iniciais:

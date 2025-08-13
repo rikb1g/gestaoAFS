@@ -9,8 +9,7 @@ class AtletaForm(forms.ModelForm):
         fields = ['nome', 'data_nascimento', 'numero', 'encarregado', 'telefone', 'email', 'guarda_redes', 'ficha']
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome do atleta'}),
-            'data_nascimento': forms.DateInput(attrs={'class': 'form-control datepicker', 'placeholder': 'Data de nascimento',
-                                                      'type': 'date'}),
+            'data_nascimento': forms.DateInput(attrs={'class': 'form-control datepicker', 'placeholder': 'Data de nascimento',                                       'type': 'date'}),
             'numero': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número do atleta'}),
             'encarregado': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Encarregado do atleta'}),
             'telefone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefone do atleta'}),
