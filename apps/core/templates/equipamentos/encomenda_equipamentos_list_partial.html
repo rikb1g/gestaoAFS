@@ -4,39 +4,40 @@
 
 
 
-    <div class="container">
-         
+<div class="container">
+
     <div class="botoes">
-        <a href="{% url 'equipamentos:create_encomenda_equipamentos' %}" class="btn-menu" data-target="#conteudo-dinamico"><img src="{% static 'images/add_image.svg' %}" alt="adicionar atleta"></a>
+        <a href="{% url 'equipamentos:create_encomenda_equipamentos' %}"
+            data-target="#conteudo-dinamico"><span class="material-symbols-outlined btn-operacoes">add</span></a>
 
     </div>
 
-<div class="container mt-5">
-    <div class="text-end mb-5">
+    <div class="container mt-5">
+        <div class="text-end mb-5">
 
-         <select name="atletas" id="atletasSelect"  onchange="atletaSelectEncomendas()" >
-        <option value="" disabled selected>Selecione um atleta</option>
-        <option value="todos">Selecionar todos</option>
-        {% for atleta in atletas %}
-        <option value={{atleta.id}}>{{ atleta.nome }}</option>
-        {% endfor %}
+            <select name="atletas" id="atletasSelect" onchange="atletaSelectEncomendas()">
+                <option value="" disabled selected>Selecione um atleta</option>
+                <option value="todos">Selecionar todos</option>
+                {% for atleta in atletas %}
+                <option value={{atleta.id}}>{{ atleta.nome }}</option>
+                {% endfor %}
             </select>
 
-        <select name="estadoEncomenda" id="estadoEncomendaSelect" onchange="atletaSelectEncomendas()">
-            <option value="false" disabled selected>Selecione um estado</option>
-            <option value="true">Entregue</option>
-            <option value="false">Pendente</option>
-        </select>
+            <select name="estadoEncomenda" id="estadoEncomendaSelect" onchange="atletaSelectEncomendas()">
+                <option value="false" disabled selected>Selecione um estado</option>
+                <option value="true">Entregue</option>
+                <option value="false">Pendente</option>
+            </select>
+        </div>
+
+
     </div>
 
-
-</div>
-
-        <div class="table-container">
-            <table class="tableEncomendas">
-                <thead>
+    <div class="table-container">
+        <table class="table-encomendas">
+            <thead>
                 <tr>
-                    <th><input type="checkbox" id='selectall' class="selectEncomendaAll" ></th>
+                    <th><input type="checkbox" type="checkbox" class="form-check-input selectEncomendaAll" id='selectall'></th>
                     <th>Nome</th>
                     <th>Artigo</th>
                     <th>Tamanho</th>
@@ -44,75 +45,69 @@
                     <th>Entregue</th>
                     <th>Operações</th>
                 </tr>
-                </thead>
+            </thead>
 
-                <tbody>
+            <tbody>
 
 
-                {% for encomenda in encomenda_equipamentos  %}
-                    <tr>
-                        <td>
-                            <input type="checkbox" class="selectEncomenda" value="{{ encomenda.id }}">
-    
-                        </td>
-                        <td>
-                            <a class="nomeAtleta" href="#">{{ encomenda.encomenda.atleta }}</a>
-                        </td>
-                        <td>
-                            {{ encomenda.equipamento }}
-                        </td>
-                        <td>
+                {% for encomenda in encomenda_equipamentos %}
+                <tr>
+                    <td>
+                        <input type="checkbox" class="form-check-input selectEncomenda" value="{{ encomenda.id }}">
+
+                    </td>
+                    <td>
+                        <a class="nomeAtleta" href="#">{{ encomenda.encomenda.atleta }}</a>
+                    </td>
+                    <td>
+                        {{ encomenda.equipamento }}
+                    </td>
+                    <td>
                         {{ encomenda.encomenda.tamanho }}
-                        </td>
-                        <td>
-                            {{ encomenda.encomenda.data_pedido }}
-                        </td>
-                        <td>
-                            <input onchange="alterarEstadoEncomenda('{{ encomenda.id }}')" type="checkbox" class="estadoEncomenda" {% if encomenda.entregue %} checked {% endif %} >
-                           
-                        </td>
-                        <td class="linha">
-                            <a href="{% url 'equipamentos:encomendas_uptade' encomenda.id %}"
+                    </td>
+                    <td>
+                        {{ encomenda.encomenda.data_pedido }}
+                    </td>
+                    <td>
+                        <input onchange="alterarEstadoEncomenda('{{ encomenda.id }}')" type="checkbox" class="form-check-input" type="radio" 
+                            class="estadoEncomenda" {% if encomenda.entregue %} checked {% endif %}>
+
+                    </td>
+                    <td class="linha">
+                        <a href="{% url 'equipamentos:encomendas_uptade' encomenda.id %}"
                             hx-get="{% url 'equipamentos:encomendas_uptade' encomenda.id %}"
-                            hx-target="#conteudo-dinamico"
-                            hx-swap="outerHTML"
-                            hx-push-url="true"
-                            ><img src="{% static 'images/edit_img.svg' %}" alt="editar encomenda"></a>
-                            <a href="#" onclick="deleteEncomenda('{{ encomenda.id }}','{{ encomenda.encomenda.atleta }}','{{ encomenda.equipamento }}')"><img src="{% static 'images/delete_img.svg' %}" alt="deletar encomenda"></a>
-                        </td>
+                            hx-target="#conteudo-dinamico" hx-swap="outerHTML" hx-push-url="true"><span class="material-symbols-outlined btn-operacoes">edit</span></a>
+                        <a href="#"
+                            onclick="deleteEncomenda('{{ encomenda.id }}','{{ encomenda.encomenda.atleta }}','{{ encomenda.equipamento }}')"><span class="material-symbols-outlined btn-operacoes">delete</span></a>
+                    </td>
 
-                    </tr>
+                </tr>
                 {% endfor %}
-                </tbody>
+            </tbody>
 
-            </table>
-        </div>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <div class="text-start">
+        <a href="#" class="btn btn-menu">Gerar PDF de Encomendas</a>
     </div>
 
-    <div class="container">
-        <div class="text-start">
-            <a href="#" class="btn btn-menu">Gerar PDF de Encomendas</a>
-        </div>
-
-    </div>
+</div>
 
 <script>
-    
-    $(function() {
-    $(".selectEncomendaAll").click(function () {
-        if ($(this).is(":checked")) {
-            console.log("checked");
-            $('.selectEncomenda').prop('checked', true);
-        } else {
-            $('.selectEncomenda').prop('checked', false);
-        }
-    })
+
+    $(function () {
+        $(".selectEncomendaAll").click(function () {
+            if ($(this).is(":checked")) {
+                console.log("checked");
+                $('.selectEncomenda').prop('checked', true);
+            } else {
+                $('.selectEncomenda').prop('checked', false);
+            }
+        })
     })
 
 
 </script>
-
-
-
-
-

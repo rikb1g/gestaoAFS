@@ -59,13 +59,13 @@ document.addEventListener("click", function(e) {
 // ====================
 $(document).on('submit', '#form-new-atleta', function(event) {
     event.preventDefault();
-    console.log("Form atletas encontrado");
 
-    
     const formData = new FormData(this);
     console.log("Form data:", formData);
+    const url = $(this).attr('data-url');
+    console.log("URL:", url);
 
-    fetch(window.urlNewAtleta, {
+    fetch(url, {
         method: 'POST',
         body: formData,
         headers: {
@@ -83,7 +83,6 @@ $(document).on('submit', '#form-new-atleta', function(event) {
         if (data.success) {
             alert(data.message);
 
-            // Recarrega lista de atletas
             carregarConteudo(window.urlAtletasList);
         } else {
             alert("Erro: " + (data.message || 'Erro ao criar atleta.'));
@@ -99,6 +98,3 @@ $(document).on('submit', '#form-new-atleta', function(event) {
     });
 });
 
-window.addEventListener('popstate', function(event) {
-    this.location.reload();
-});

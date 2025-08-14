@@ -12,7 +12,7 @@
 
 <div class="container text-center mt-5">
 
-    <form method="post" id="form-new-encomenda" class="form-control" enctype="multipart/form-data">
+    <form method="post" id="form-new-encomenda" {% if object %} data-url="{% url 'equipamentos:encomendas_uptade' object.pk %}" {% else %} data-url="{% url 'equipamentos:create_encomenda_equipamentos' %}" {% endif %} enctype="multipart/form-data">
   {% csrf_token %}
   <fieldset>
     <legend>Dados da Encomenda</legend>

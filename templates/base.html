@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,17 +17,18 @@
 </head>
 <body>
 
-<a href="#"><img src="{% static 'images/btn-menu.svg' %}" alt="" onclick="menu()"></a>
 
-    <div class="menu">
+
+    <div class="menu d-flex justify-content-center">
         <a href="{% url 'atletas:atletas_list' %}" class="btn-menu">Atletas</a>
         <a href="{% url 'equipamentos:encomendas_equipamentos_list' %}" class="btn-menu">Encomendas</a>
         <a href="#" class="btn-menu">Jogos</a>
+        <button id="theme-toggle" class="btn btn-outline-secondary ms-auto">🌙 Escuro</button>
     </div>
 
 
 
-    <div id="conteudo-dinamico" class="container-main">
+    <div id="conteudo-dinamico" class="container-main mt-5">
         {% block main %}
         {% endblock %}
     </div>

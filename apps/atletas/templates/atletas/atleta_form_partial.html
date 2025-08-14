@@ -12,10 +12,10 @@
     {% else %}
     <div class="text-center">Novo Atleta</div>
     {% endif %}
-<form method="post" id="form-new-atleta" enctype="multipart/form-data">
+<form method="post" id="form-new-atleta" enctype="multipart/form-data" {% if object %} data-url="{% url 'atletas:update_atleta' object.pk %}" {% else %} data-url="{% url 'atletas:create_atleta' %}" {% endif %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-secondary">Gravar entrada</button>
+    <button type="submit" >Gravar entrada</button>
 </form>
 </div>
 
@@ -27,9 +27,4 @@
     altFormat: "d/m/Y",
     locale: "pt"
   });
-</script>
-
-<script>
-  window.urlAtletasList = "{% url 'atletas:atletas_list' %}"
-  window.urlNewAtleta = "{% url 'atletas:create_atleta' %}"
 </script>

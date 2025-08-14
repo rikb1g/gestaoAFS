@@ -1,4 +1,3 @@
-
 {% load static %}
 
 
@@ -9,45 +8,48 @@
 <div class="container-atletas">
 
     <div class="leftcontainer">
-       
+
     </div>
 
     <div class="rightcontainer">
         <div class="table-container">
-            <table class="tableAtletas">
+            <table class="table-atletas">
                 <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Data de Nascimento</th>
-                    <th>Número</th>
-                    <th>Encarregado</th>
-                    <th>Contacto</th>
-                    <th>Email</th>
-                    <th>Guarda-redes</th>
-                    <th>Ficha</th>
-                    <th>Operações</th>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Data de Nascimento</th>
+                        <th>Número</th>
+                        <th>Encarregado</th>
+                        <th>Contacto</th>
+                        <th>Email</th>
+                        <th>Guarda-redes</th>
+                        <th>Operações</th>
 
-                </tr>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for atleta in atletas %}
-                <tr>
-                    <td><a href="{% url 'atletas:detail_atleta' atleta.id %}" hx-get="{% url 'atletas:detail_atleta' atleta.id %}" hx-target="#conteudo-dinamico" 
-                        hx-targe="#conteudo-dinamico" hx-push-url="true" class="btn-menu nomeAtleta">{{ atleta.nome }}</a></td>
-                    <td>{{ atleta.data_nascimento }}</td>
-                    <td>{{ atleta.numero }}</td>
-                    <td>{{ atleta.encarregado }}</td>
-                    <td>{{ atleta.telefone }}</td>
-                    <td>{{ atleta.email }}</td>
-                    <td>{{ atleta.guarda_redes }}</td>
-                    <td>{{ atleta.ficha }}</td>
-                    <td class="linha">
-                        <a href="{% url 'atletas:update_atleta' atleta.id %}" class="btn-menu"><img src="{% static 'images/edit_img.svg' %}" alt="editar atleta"></a>
-                        <a href="#" onclick="deleteAtleta('{{ atleta.id }}', '{{ atleta.nome }}');"><img src="{% static 'images/delete_img.svg' %}" alt="apagar atleta"></a>
-                        <a href="#"><img src="{% static 'images/shoping_cart.svg' %}" alt="encomendar"></a>
-                    </td>
-                </tr>
-                {% endfor %}
+                    {% for atleta in atletas %}
+                    <tr>
+                        <td><a href="{% url 'atletas:detail_atleta' atleta.id %}"
+                                hx-get="{% url 'atletas:detail_atleta' atleta.id %}" hx-target="#conteudo-dinamico"
+                                hx-targe="#conteudo-dinamico" hx-push-url="true" class="">{{ atleta.nome }}</a></td>
+                        <td>{{ atleta.data_nascimento|date:"d/m/Y" }}</td>
+                        <td>{{ atleta.numero }}</td>
+                        <td>{{ atleta.encarregado }}</td>
+                        <td>{{ atleta.telefone }}</td>
+                        <td>{{ atleta.email }}</td>
+                        <td><input type="checkbox" class="form-check-input" {% if atleta.guarda_redes %} checked {% endif %} disabled> </td>
+                        <td class="linha">
+                            <a href="{% url 'atletas:update_atleta' atleta.id %}"><span
+                                    class="material-symbols-outlined btn-operacoes"> edit</span></a>
+                            <a href="#" onclick="deleteAtleta('{{ atleta.id }}', '{{ atleta.nome }}');"><span
+                                    class="material-symbols-outlined btn-operacoes">
+                                    delete
+                                </span></a>
+                            <a href="#"><span class="material-symbols-outlined btn-operacoes">shopping_cart_checkout</span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
 
 
             </table>
@@ -58,12 +60,10 @@
     </div>
     <div class="botoes">
         <a href="{% url 'atletas:create_atleta' %}" class="btn-menu ajax-link">
-  <img src="{% static 'images/add_image.svg' %}" alt="adicionar atleta">
-</a>
+            <span class="material-symbols-outlined btn-operacoes">add</span>
+        </a>
     </div>
 
 
 
 </div>
-
-
