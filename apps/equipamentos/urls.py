@@ -13,7 +13,7 @@ urlpatterns = [
     path('delete_equipamentos/<int:pk>/', views.equipamentos_delete, name='delete_equipamentos'),
     path('encomenda_delete/<int:pk>/', views.encomenda_delete, name='encomenda_delete'),
     path('encomendas_por_atleta/<int:pk>/<str:status>/', views.encomendas_por_atleta, name='encomendas_por_atleta'),
-    path('encomendas_uptade/<int:pk>/', views.EncomendaUpdateView.as_view(), name='encomendas_uptade'),
+    path('encomendas_uptade/<int:pk>/', views.EncomendaItemUpdateView.as_view(), name='encomendas_uptade'),
     path('alterar_estado_encomenda/<int:pk>/', views.alterar_estado_encomenda, name='alterar_estado_encomenda'),
 ]
 

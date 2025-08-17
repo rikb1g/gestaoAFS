@@ -6,12 +6,11 @@
 
 <div class="container text-center">
 
+  <div class="form-header">
+    <div class="titulo">{% if object %}Editar Atleta{% else %}Novo Atleta{% endif %}</div>
+  </div>
 
-    {% if object %}
-   <div class="text-center">Editar Atleta</div>
-    {% else %}
-    <div class="text-center">Novo Atleta</div>
-    {% endif %}
+
 <form method="post" id="form-new-atleta" enctype="multipart/form-data" {% if object %} data-url="{% url 'atletas:update_atleta' object.pk %}" {% else %} data-url="{% url 'atletas:create_atleta' %}" {% endif %}">
     {% csrf_token %}
     {{ form.as_p }}
@@ -27,4 +26,9 @@
     altFormat: "d/m/Y",
     locale: "pt"
   });
+</script>
+
+
+<script>
+  window.urlAtletasList = "{% url 'atletas:atletas_list' %}";
 </script>

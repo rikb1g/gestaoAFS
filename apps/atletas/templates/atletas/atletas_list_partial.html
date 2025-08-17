@@ -7,11 +7,16 @@
 
 <div class="container-atletas">
 
-    <div class="leftcontainer">
 
+    <div class="header">
+        <h1 class="titulo">Atletas AVS</h1>
+        <a href="{% url 'atletas:create_atleta' %}" class="btn-add">
+            <span class="material-symbols-outlined">add</span>
+            Novo Atleta
+        </a>
     </div>
-
-    <div class="rightcontainer">
+    
+    <div class="table-responsive">
         <div class="table-container">
             <table class="table-atletas">
                 <thead>
@@ -58,12 +63,4 @@
 
 
     </div>
-    <div class="botoes">
-        <a href="{% url 'atletas:create_atleta' %}" class="btn-menu ajax-link">
-            <span class="material-symbols-outlined btn-operacoes">add</span>
-        </a>
-    </div>
-
-
-
 </div>

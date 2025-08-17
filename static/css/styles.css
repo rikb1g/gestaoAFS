@@ -33,6 +33,59 @@ a {
     color: var(--link-color);
     transition: color 0.3s;
 }
+.invalid-feedback {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+.btn-add {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+    
+
+}
+
+.header .titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    transition: color 0.3s;
+}
+.form-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-header .titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    transition: color 0.3s;
+}
 
 table {
     border-collapse: separate; /* importante! */
@@ -76,15 +129,21 @@ table th{
 
 .menu {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 10px;
     padding: 10px;
     background-color: var(--table-bg);
     border-bottom: 1px solid var(--table-border);
-    justify-content: center;
-    align-items: center;
+
     transition: background-color 0.3s, color 0.3s;
 }
-
+.menu-link {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex: 1;
+}
 .btn-menu {
     padding: 8px 12px;
     text-decoration: none;

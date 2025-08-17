@@ -1,6 +1,6 @@
 from django import forms
 from apps.atletas.models import Atleta
-
+from django.utils import timezone
 
 
 class AtletaForm(forms.ModelForm):
@@ -18,8 +18,21 @@ class AtletaForm(forms.ModelForm):
             'ficha': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Ficha do atleta'}),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        data_nascimento = cleaned_data.get('data_nascimento')
+        numero = cleaned_data.get('numero')
+
+        if data_nascimento and numero:
+            ano_nascimento = data_nascimento.year
+            conflitos = Atleta.objects.filter(data_nascimento__year=ano_nascimento, numero=numero)
+            if self.instance.pk:
+                conflitos = conflitos.exclude(pk=self.instance.pk)
+            if conflitos.exists():
+                self.add_error(None, "Já existe um atleta com o mesmo número e ano de nascimento.")
     def __init__(self, *args, **kwargs):
         super(AtletaForm, self).__init__(*args, **kwargs)
         self.fields['ficha'].required = False
+        
 
 

@@ -50,9 +50,10 @@ class AtletaCreateView(CreateView):
     
     def form_invalid(self, form):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            errors = form.errors.get_json_data() 
             html_form = render_to_string('atletas/atleta_form_partial.html', {'form': form}, request=self.request)  
             htm = {'html-form': html_form}
-            return JsonResponse({'success': False ,'html-form': htm}, status=400)
+            return JsonResponse({'success': False ,'html-form': htm, 'message': errors}, status=400)
         return super().form_invalid(form)
 
 
@@ -116,8 +117,8 @@ def atletas_delete(request, pk):
     try:
         atleta = get_object_or_404(Atleta, pk=pk)
         atleta.delete()
-        return JsonResponse({'success': True,'mensagem': f"Atleta {atleta.nome} eliminado com sucesso!"})
+        return JsonResponse({'success': True,'message': f"Atleta {atleta.nome} eliminado com sucesso!"})
     except:
-        return JsonResponse({'success': False,'mensagem': "Erro ao eliminar atleta!"}, status=400)
+        return JsonResponse({'success': False,'message': "Erro ao eliminar atleta!"}, status=400)
     
 

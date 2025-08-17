@@ -121,10 +121,11 @@ class EncomendaItemCreateView(CreateView):
     def get(self,request):
         form_encomenda  = EncomendaForm()
         form_item= EncomendaItemForm()
+        print(form_item)
 
         return render(request, 'equipamentos/encomenda_item_create.html',
                       {'form_encomenda':form_encomenda,'form_item':form_item})
-
+    
     def post(self,request):
         form_encomenda = EncomendaForm(request.POST)
         form_item = EncomendaItemForm(request.POST)
@@ -155,7 +156,7 @@ class EncomendaItemCreateView(CreateView):
 
     
         
-class EncomendaUpdateView(UpdateView):
+class EncomendaItemUpdateView(UpdateView):
     def get(self, request, pk):
         item = get_object_or_404(EncomendaItem, pk=pk)
         form_encomenda = EncomendaForm(instance=item.encomenda)
@@ -165,6 +166,11 @@ class EncomendaUpdateView(UpdateView):
             'equipamentos/encomenda_item_create.html',
             {'form_encomenda': form_encomenda, 'form_item': form_item}
         )
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['aqui'] = EncomendaItemForm(instance=self.object)
+        return context
 
     def post(self, request, pk):
         item = get_object_or_404(EncomendaItem, pk=pk)

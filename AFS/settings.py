@@ -2,18 +2,35 @@
 from pathlib import Path
 import sys
 import os
+import environ
+
+
+
+env = environ.Env(
+    DEBUG=(bool, False),
+)
+
+
+
+
+
+environ.Env.read_env(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 from django.conf.global_settings import STATIC_ROOT
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-SECRET_KEY = 'django-insecure-v=9*vyn6ncl7$g&=ft2g*272(faq5c@(d9%7ro9_7()zz3($89'
 
 
-DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
+SECRET_KEY = env('DJANGO_SECRET_KEY')  
+ENVIRONMENT = env('ENVIRONMENT')
+
+if ENVIRONMENT == 'production':
+    ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost'])
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 
@@ -67,12 +84,14 @@ WSGI_APPLICATION = 'AFS.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
-
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -96,8 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-pt'
 
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'Europe/Lisbon'
 USE_I18N = True
 USE_TZ = True
 
@@ -117,3 +135,19 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+if ENVIRONMENT == 'production':
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+
+if ENVIRONMENT == 'production':
+    INTERNAL_IPS = ['127.0.0.1']

@@ -17,7 +17,7 @@ function deleteAtleta(atletaId, nomeAtleta) {
         fetch('/atletas/delete_atleta/' + atletaId + '/')
             .then(response => response.json())
             .then(data => {
-                if (data.success || data.message) { 
+                if (data.success) { 
                     alert(data.message);
                     // Recarrega a lista de atletas
                     carregarConteudo(window.urlAtletasList);
