@@ -17,7 +17,6 @@ if (atletaID) {
 
 
 function atletaSelectEncomendas() {
-    console.log("atletaSelectEncomendas");
     var atletaIDSession = document.getElementById("atletasSelect").value;
     sessionStorage.setItem("atletaID", atletaIDSession);
 
@@ -26,14 +25,9 @@ function atletaSelectEncomendas() {
     var estadoEncomenda = sessionStorage.getItem("estadoEncomenda");
 
     var atletaID = sessionStorage.getItem("atletaID");
-    let bodyEncomendas = $('.tableEncomendas tbody');
-
-    if (atletaID == "todos") {
-        carregarConteudo(window.urlEncomendasList);
-
-    }
-
-    else if (atletaID.length > 0) {
+    let bodyEncomendas = $('.table-encomendas tbody');
+    
+    if (atletaID.length > 0 ) {
 
         $.ajax({
             url: '/equipamentos/encomendas_por_atleta/' + atletaID + '/' + estadoEncomenda + '/',
@@ -41,8 +35,6 @@ function atletaSelectEncomendas() {
             dataType: 'json',
             success: function (data) {
                 let resultados = data.resultados
-
-
                 if (resultados.length > 0) {
                     bodyEncomendas.empty()
 
@@ -54,16 +46,13 @@ function atletaSelectEncomendas() {
                                     <td>${item.equipamento}</td>
                                     <td>${item.tamanho}</td>
                                     <td>${item.data_pedido}</td> 
-                                    <td><input onchange="alterarEstadoEncomenda('${item.id}')" type="checkbox" name="entregue" id="entregue" ${item.entregue ? 'checked' : ''}></td>
+                                    <td><input onchange="alterarEstadoEncomenda('${item.id}')" class="form-check-input estadoEncomenda" type="checkbox" name="entregue" id="entregue" ${item.entregue ? 'checked' : ''}></td>
                                     <td class="linha">
                                     <a href="/equipamentos/encomendas_uptade/${item.id}/"
-                                            hx-get="/equipamentos/encomendas_uptade/${item.id}/"
-                                            hx-target="#conteudo-dinamico"
-                                            hx-swap="outerHTML"
                                         hx-push-url="true"
-                                        ><span
+                                        class="link-ajax"><span
                                     class="material-symbols-outlined btn-operacoes"> edit</span></a>
-                                    <a href="#" onclick="deleteEncomenda('${item.id}','${item.atleta}','${item.equipamento}')">
+                                    <a href="#" class="link-ajax" onclick="deleteEncomenda('${item.id}','${item.atleta}','${item.equipamento}')">
                                     <span class="material-symbols-outlined btn-operacoes">delete</span></a>
                                     </td>
                                     </tr>`
@@ -85,7 +74,41 @@ function atletaSelectEncomendas() {
 
 
     }
+    
 }
+
+$(document).on('click', '.pdf-encomendas', function (e) {
+    e.preventDefault();
+
+    var lista = [];
+    $('.selectEncomenda').each(function () {
+        if ($(this).is(':checked')) {
+            lista.push($(this).val());
+        }
+    });
+
+    var form = $('<form>', {
+        method: 'POST',
+        action: '/equipamentos/pdf_encomendas_atletas/',
+        target: '_blank'
+    });
+
+    form.append($('<input>', {
+        type: 'hidden',
+        name: 'csrfmiddlewaretoken',
+        value: $('input[name="csrfmiddlewaretoken"]').val()
+    }));
+
+    form.append($('<input>', {
+        type: 'hidden',
+        name: 'encomendas',
+        value: JSON.stringify(lista)
+    }));
+
+    $('body').append(form);
+    form.submit();
+    form.remove();
+});;
 
 $(document).on('submit', '#form-new-encomenda', function (event) {
     event.preventDefault();

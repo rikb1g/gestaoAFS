@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
@@ -7,6 +7,12 @@ from apps.atletas.models import Atleta
 from apps.atletas.forms import AtletaForm
 from apps.jogos.models import Jogos
 from apps.equipamentos.models import EncomendaItem
+
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import  TA_CENTER
 
 
 class AtletaListView(ListView):
@@ -122,3 +128,51 @@ def atletas_delete(request, pk):
         return JsonResponse({'success': False,'message': "Erro ao eliminar atleta!"}, status=400)
     
 
+def gerar_pdf_camisolas_atletas(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="relatorio.pdf"'
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    elements = []
+
+    titulo_style = ParagraphStyle(
+        'titulo',
+        fontName='Helvetica-Bold',
+        fontSize=18,
+        textColor=colors.HexColor("#183153"),
+        spaceAfter=40,
+        alignment=TA_CENTER
+
+    )
+    elements.append(Paragraph("Relatório de Camisolas", titulo_style))
+    data = [["Nome", "Número", 'Tipo', "Tamanho"]]
+    encomendas_equipamento_jogo = EncomendaItem.objects.filter(equipamento__nome__in=["jogo principal", "guarda-redes azul"]).order_by('encomenda__atleta__nome')
+    for equipamento in encomendas_equipamento_jogo:
+        data.append([str(equipamento.encomenda.atleta).title(), str(equipamento.encomenda.atleta.numero), str(equipamento.equipamento).capitalize(), str(equipamento.encomenda.tamanho)])
+
+    table = Table(data)
+
+    style = TableStyle([
+    # Cabeçalho
+    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#4B7BEC")),
+    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+
+    # Bordas
+    ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#CED4DA")),
+    ])
+    for i, row in enumerate(data[1:], start=1):
+        bg_color = colors.HexColor("#F4F6F8") if i % 2 == 1 else colors.white
+        style.add('BACKGROUND', (0, i), (-1, i), bg_color)
+
+    table.setStyle(style)
+    
+
+    elements.append(table)
+    doc.build(elements)
+    return response
+
+
+    
+    

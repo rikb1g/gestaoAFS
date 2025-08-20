@@ -10,7 +10,7 @@
 
     <div class="header">
         <h1 class="titulo">Atletas AVS</h1>
-        <a href="{% url 'atletas:create_atleta' %}" class="btn-add">
+        <a href="{% url 'atletas:create_atleta' %}" class="btn-add link-ajax">
             <span class="material-symbols-outlined">add</span>
             Novo Atleta
         </a>
@@ -24,12 +24,9 @@
                         <th>Nome</th>
                         <th>Data de Nascimento</th>
                         <th>Número</th>
-                        <th>Encarregado</th>
-                        <th>Contacto</th>
-                        <th>Email</th>
+                        <th>Nome Camisola</th>
                         <th>Guarda-redes</th>
                         <th>Operações</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -37,17 +34,15 @@
                     <tr>
                         <td><a href="{% url 'atletas:detail_atleta' atleta.id %}"
                                 hx-get="{% url 'atletas:detail_atleta' atleta.id %}" hx-target="#conteudo-dinamico"
-                                hx-targe="#conteudo-dinamico" hx-push-url="true" class="">{{ atleta.nome }}</a></td>
+                                hx-targe="#conteudo-dinamico" hx-push-url="true" class="link-ajax">{{ atleta.nome }}</a></td>
                         <td>{{ atleta.data_nascimento|date:"d/m/Y" }}</td>
                         <td>{{ atleta.numero }}</td>
-                        <td>{{ atleta.encarregado }}</td>
-                        <td>{{ atleta.telefone }}</td>
-                        <td>{{ atleta.email }}</td>
+                        <td>{% if atleta.nome_camisola %}{{ atleta.nome_camisola }}{% else %}N/A{% endif %}</td>
                         <td><input type="checkbox" class="form-check-input" {% if atleta.guarda_redes %} checked {% endif %} disabled> </td>
                         <td class="linha">
-                            <a href="{% url 'atletas:update_atleta' atleta.id %}"><span
+                            <a href="{% url 'atletas:update_atleta' atleta.id %}" class="link-ajax"><span
                                     class="material-symbols-outlined btn-operacoes"> edit</span></a>
-                            <a href="#" onclick="deleteAtleta('{{ atleta.id }}', '{{ atleta.nome }}');"><span
+                            <a href="#" class="link-ajax" onclick="deleteAtleta('{{ atleta.id }}', '{{ atleta.nome }}');"><span
                                     class="material-symbols-outlined btn-operacoes">
                                     delete
                                 </span></a>
@@ -63,4 +58,14 @@
 
 
     </div>
+    <div class="header">
+        <div class="me-auto">
+            <a href="{% url 'atletas:pdf_camisolas_atletas' %}" class="btn-add">
+            <span class="material-symbols-outlined">print</span>
+            Imprimir Nº Camisolas
+        </a>
+    </div>
+        </div>
+        
+    
 </div>

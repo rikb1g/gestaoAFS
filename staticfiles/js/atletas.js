@@ -64,6 +64,7 @@ $(document).on('submit', '#form-new-atleta', function(event) {
     console.log("Form data:", formData);
     const url = $(this).attr('data-url');
     console.log("URL:", url);
+    console.log("aqui");
 
     fetch(url, {
         method: 'POST',

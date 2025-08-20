@@ -3,6 +3,10 @@ function menu() {
     menu.classList.toggle('show');
 }
 
+document.body.classList.add('preload'); 
+window.addEventListener('load', () => {
+    document.body.classList.remove('preload');
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     const tooggleBtn = document.getElementById("theme-toggle");
@@ -24,20 +28,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     tooggleBtn.addEventListener("click", function() {
+      console.log("clicou")
        
       if(body.classList.contains("dark-mode")){
             body.classList.remove("dark-mode");
             tooggleBtn.textContent = "🌙 Escuro"
             localStorage.setItem("theme", "light");
+            window.location.reload();
             
       } else {
             body.classList.add("dark-mode");
             tooggleBtn.textContent = "☀️ Claro"
             localStorage.setItem("theme", "dark");
+            window.location.reload();
       }
         
     });
 });
+
+
 
 
 window.addEventListener('popstate', function(event) {
@@ -56,6 +65,20 @@ $(document).on('click', '.btn-menu', function (e) {
       })
              
 });
+
+$(document).on('click', '.link-ajax', function (e) {
+      e.preventDefault();
+      const url = $(this).attr('href')
+      console.log(url)
+
+      $.get(url, function (data) {
+            $('#conteudo-dinamico').html(data)
+            window.history.pushState(null, null, url)
+       
+      })
+             
+});
+
 
 
 

@@ -1,41 +1,29 @@
-
-from pathlib import Path
-import sys
 import os
+from pathlib import Path
 import environ
-import dj_database_url
-from django.contrib.auth import get_user_model
 
-
+# Inicializar variáveis de ambiente
 env = environ.Env(
     DEBUG=(bool, False),
 )
 
-
-
-
-
-environ.Env.read_env(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
-
-from django.conf.global_settings import STATIC_ROOT
+# Ler o .env
+environ.Env.read_env(os.path.join(Path(__file__).resolve().parent.parent, '.env'))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
+ENVIRONMENT = env('ENVIRONMENT', default='development')
 
-
-
-SECRET_KEY = env('DJANGO_SECRET_KEY')  
-ENVIRONMENT = env('ENVIRONMENT')
-
+# ALLOWED_HOSTS
 if ENVIRONMENT == 'production':
-    ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost'])
+    ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
 else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    # Desenvolvimento: localhost e 127.0.0.1 sempre permitidos
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-
-
-
+# Apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # teus apps
     'apps.atletas',
     'apps.equipamentos',
     'apps.core',
@@ -64,7 +53,7 @@ ROOT_URLCONF = 'AFS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,83 +68,37 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AFS.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-"""DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}"""
-
+# Base de dados (SQLite para dev)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR/ "db.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
-
-
+# Password validators
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
+# Internacionalização
 LANGUAGE_CODE = 'pt-pt'
-
 TIME_ZONE = 'Europe/Lisbon'
 USE_I18N = True
 USE_TZ = True
 
-
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Static & Media
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-if ENVIRONMENT == 'production':
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 3600
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    X_FRAME_OPTIONS = 'DENY'
-
-
-if ENVIRONMENT == 'production':
-    INTERNAL_IPS = ['127.0.0.1']
-
-
-
-
-
-

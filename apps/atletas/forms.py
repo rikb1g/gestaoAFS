@@ -6,11 +6,12 @@ from django.utils import timezone
 class AtletaForm(forms.ModelForm):
     class Meta:
         model = Atleta
-        fields = ['nome', 'data_nascimento', 'numero', 'encarregado', 'telefone', 'email', 'guarda_redes', 'ficha']
+        fields = ['nome', 'data_nascimento', 'numero', 'nome_camisola', 'encarregado', 'telefone', 'email', 'guarda_redes', 'ficha']
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome do atleta'}),
             'data_nascimento': forms.DateInput(attrs={'class': 'form-control datepicker', 'placeholder': 'Data de nascimento',                                       'type': 'date'}),
             'numero': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número do atleta'}),
+            'nome_camisola': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome da camisola do atleta'}),
             'encarregado': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Encarregado do atleta'}),
             'telefone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefone do atleta'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email do atleta'}),

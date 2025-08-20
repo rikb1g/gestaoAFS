@@ -4,94 +4,102 @@
 
 
 
-<div class="container">
+<div class="container-atletas">
 
-    <div class="botoes">
-        <a href="{% url 'equipamentos:create_encomenda_equipamentos' %}"
-            data-target="#conteudo-dinamico"><span class="material-symbols-outlined btn-operacoes">add</span></a>
-
-    </div>
-
-    <div class="container mt-5">
-        <div class="text-end mb-5">
-
-            <select name="atletas" id="atletasSelect" onchange="atletaSelectEncomendas()">
-                <option value="" disabled selected>Selecione um atleta</option>
-                <option value="todos">Selecionar todos</option>
-                {% for atleta in atletas %}
-                <option value={{atleta.id}}>{{ atleta.nome }}</option>
-                {% endfor %}
-            </select>
-
-            <select name="estadoEncomenda" id="estadoEncomendaSelect" onchange="atletaSelectEncomendas()">
-                <option value="false" disabled selected>Selecione um estado</option>
-                <option value="true">Entregue</option>
-                <option value="false">Pendente</option>
-            </select>
+    <div class="header d-flex mb-3">
+        <div class="me-auto p-2">
+            <h1 class="titulo">Encomendas equipamento</h1>
         </div>
+        <div class="p-2">
+            <select name="atletas" id="atletasSelect" onchange="atletaSelectEncomendas()">
+            <option value="todosAtletas" disabled selected>Selecione um atleta</option>
+            <option value="todos">Selecionar todos</option>
+            {% for atleta in atletas %}
+            <option value='{{atleta.id}}'>{{ atleta.nome }}</option>
+            {% endfor %}
+        </select>
 
-
+        <select name="estadoEncomenda" id="estadoEncomendaSelect" onchange="atletaSelectEncomendas()">
+            <option value="todos" disabled selected>Selecione um estado</option>
+            <option value="entregue">Entregue</option>
+            <option value="pendente">Pendente</option>
+            <option value="todos">Selecionar todos</option>
+        </select>
+        </div>
+        <div class="p-2">
+            <a href="{% url 'equipamentos:create_encomenda_equipamentos' %}" class="btn-add link-ajax"><span
+                class="material-symbols-outlined btn-operacoes">add</span>Nova Encomenda</a>
+        </div>
+        
+        
+        
     </div>
 
-    <div class="table-container">
-        <table class="table-encomendas">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" type="checkbox" class="form-check-input selectEncomendaAll" id='selectall'></th>
-                    <th>Nome</th>
-                    <th>Artigo</th>
-                    <th>Tamanho</th>
-                    <th>Data Encomenda</th>
-                    <th>Entregue</th>
-                    <th>Operações</th>
-                </tr>
-            </thead>
+    <div class="table-responsive">
+        <div class="table-container">
+            <table class="table-encomendas">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" type="checkbox" class="form-check-input selectEncomendaAll"
+                                id='selectall'></th>
+                        <th>Nome</th>
+                        <th>Artigo</th>
+                        <th>Tamanho</th>
+                        <th>Data Encomenda</th>
+                        <th>Entregue</th>
+                        <th>Operações</th>
+                    </tr>
+                </thead>
 
-            <tbody>
+                <tbody>
 
 
-                {% for encomenda in encomenda_equipamentos %}
-                <tr>
-                    <td>
-                        <input type="checkbox" class="form-check-input selectEncomenda" value="{{ encomenda.id }}">
+                    {% for encomenda in encomenda_equipamentos %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="form-check-input selectEncomenda" value="{{ encomenda.id }}">
 
-                    </td>
-                    <td>
-                        <a class="nomeAtleta" href="#">{{ encomenda.encomenda.atleta }}</a>
-                    </td>
-                    <td>
-                        {{ encomenda.equipamento }}
-                    </td>
-                    <td>
-                        {{ encomenda.encomenda.tamanho }}
-                    </td>
-                    <td>
-                        {{ encomenda.encomenda.data_pedido }}
-                    </td>
-                    <td>
-                        <input onchange="alterarEstadoEncomenda('{{ encomenda.id }}')" type="checkbox" class="form-check-input" type="radio" 
-                            class="estadoEncomenda" {% if encomenda.entregue %} checked {% endif %}>
+                        </td>
+                        <td>
+                            <a class="nomeAtleta" href="#">{{ encomenda.encomenda.atleta }}</a>
+                        </td>
+                        <td>
+                            {{ encomenda.equipamento }}
+                        </td>
+                        <td>
+                            {{ encomenda.encomenda.tamanho }}
+                        </td>
+                        <td>
+                            {{ encomenda.encomenda.data_pedido }}
+                        </td>
+                        <td>
+                            <input onchange="alterarEstadoEncomenda('{{ encomenda.id }}')" type="checkbox"
+                                class="form-check-input estadoEncomenda" {% if encomenda.entregue %}checked{% endif %}>
 
-                    </td>
-                    <td class="linha">
-                        <a href="{% url 'equipamentos:encomendas_uptade' encomenda.id %}"
-                            hx-get="{% url 'equipamentos:encomendas_uptade' encomenda.id %}"
-                            hx-target="#conteudo-dinamico" hx-swap="outerHTML" hx-push-url="true"><span class="material-symbols-outlined btn-operacoes">edit</span></a>
-                        <a href="#"
-                            onclick="deleteEncomenda('{{ encomenda.id }}','{{ encomenda.encomenda.atleta }}','{{ encomenda.equipamento }}')"><span class="material-symbols-outlined btn-operacoes">delete</span></a>
-                    </td>
+                        </td>
+                        <td class="linha">
+                            <a href="{% url 'equipamentos:encomendas_uptade' encomenda.id %}"
+                                 hx-swap="outerHTML" hx-push-url="true" class="link-ajax"><span
+                                    class="material-symbols-outlined btn-operacoes">edit</span></a>
+                            <a href="#" class="link-ajax"
+                                onclick="deleteEncomenda('{{ encomenda.id }}','{{ encomenda.encomenda.atleta }}','{{ encomenda.equipamento }}')"><span
+                                    class="material-symbols-outlined btn-operacoes link-ajax">delete</span></a>
+                        </td>
 
-                </tr>
-                {% endfor %}
-            </tbody>
+                    </tr>
+                    {% endfor %}
+                </tbody>
 
-        </table>
+            </table>
+        </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="text-start">
-        <a href="#" class="btn btn-menu">Gerar PDF de Encomendas</a>
+<div class="header">
+    <div class="me-auto">
+        <a href="#" class="btn-add pdf-encomendas">
+        <span class="material-symbols-outlined">print</span>
+        Gerar PDF de Encomendas</a>
     </div>
 
 </div>

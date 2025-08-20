@@ -1,9 +1,17 @@
-from django.http import JsonResponse
+from django.http import FileResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.templatetags.static import static
 from django.template.loader import render_to_string
 from django.views.generic import CreateView, DetailView, ListView,UpdateView
+from django.views.decorators.csrf import csrf_exempt
+import json
+import io
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import  TA_CENTER
 from apps.atletas.models import Atleta
 from apps.equipamentos.models import Equipamentos, Tamanho, EncomendaItem, Encomenda, encomenda_kit
 from apps.equipamentos.forms import EquipamentosForm,EncomendaItemForm , TamanhoForm, EncomendaForm
@@ -105,7 +113,16 @@ class EncomendaEquipamentosListView(ListView):
 
 
     def get_queryset(self):
-        return EncomendaItem.objects.all().order_by('entregue')
+        queryset = EncomendaItem.objects.all()
+        status = self.request.GET.get('status')
+        print(status)
+        if status == 'todos':
+            queryset = EncomendaItem.objects.all()
+        elif status == 'true':
+            queryset = EncomendaItem.objects.filter(entregue=True)
+        elif status == 'false':
+            queryset = EncomendaItem.objects.filter(entregue=False)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -123,8 +140,9 @@ class EncomendaItemCreateView(CreateView):
         form_item= EncomendaItemForm()
         print(form_item)
 
-        return render(request, 'equipamentos/encomenda_item_create.html',
-                      {'form_encomenda':form_encomenda,'form_item':form_item})
+        template = 'equipamentos/encomenda_item_create_partial.html' if request.headers.get('HX-Request') or request.headers.get('x-requested-with') == 'XMLHttpRequest' else 'equipamentos/encomenda_item_create.html'
+
+        return render(request, template, {'form_encomenda': form_encomenda, 'form_item': form_item})
     
     def post(self,request):
         form_encomenda = EncomendaForm(request.POST)
@@ -161,11 +179,9 @@ class EncomendaItemUpdateView(UpdateView):
         item = get_object_or_404(EncomendaItem, pk=pk)
         form_encomenda = EncomendaForm(instance=item.encomenda)
         form_item = EncomendaItemForm(instance=item)
-        return render(
-            request,
-            'equipamentos/encomenda_item_create.html',
-            {'form_encomenda': form_encomenda, 'form_item': form_item}
-        )
+        template = 'equipamentos/encomenda_item_create_partial.html' if request.headers.get('HX-Request') or request.headers.get('x-requested-with') == 'XMLHttpRequest' else 'equipamentos/encomenda_item_create.html'
+
+        return render(request, template, {'form_encomenda': form_encomenda, 'form_item': form_item})
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -225,10 +241,24 @@ def equipamentos_delete(request, pk):
         return JsonResponse({'success': False,'message': "Erro ao eliminar equipamento!"}, status=400)
 
 def encomendas_por_atleta(request, pk,status):
-    status_bool = True if status.lower() == 'true' else False
-    atleta = Atleta.objects.get(pk=pk)
-    encomenda = Encomenda.objects.filter(atleta=atleta)
-    encomendas = EncomendaItem.objects.filter(encomenda__in=encomenda,entregue=status_bool)
+    
+    
+    if (pk == 'todos' or pk == 'todosAtletas') and status == 'todos':
+        print("todos")
+        encomendas = EncomendaItem.objects.all()
+    elif (pk == 'todos' or pk == 'todosAtletas') and status !='todos':
+        print("todos mas entregue ou nao entregue")
+        status_bool = True if status == 'entregue' else False
+        encomendas = EncomendaItem.objects.filter(entregue=status_bool)
+    elif pk != 'todos' and status == 'todos':
+        print("um atleta todas as encomendas")
+        encomendas = EncomendaItem.objects.filter(encomenda__atleta__id=pk)
+    else:
+        print("um atleta entregue ou nao entregue")
+        status_bool = True if status == 'entregue' else False
+        print(status_bool)
+        encomendas = EncomendaItem.objects.filter(encomenda__atleta__id=pk, entregue=status_bool)
+    
     resultados = [
         {
             'id' : encomenda.id,
@@ -249,3 +279,76 @@ def alterar_estado_encomenda(request, pk):
     encomenda.entregue = not encomenda.entregue
     encomenda.save()
     return JsonResponse({'success': True,'message': f"Encomenda entregue com sucesso!"})
+
+@csrf_exempt
+def gerar_pdf_encomendas(request):
+    print(request.method)
+    if request.method == 'POST':
+        try:
+            encomendas_json = request.POST.get("encomendas", "[]")
+            lista_ids = json.loads(encomendas_json)
+            print(lista_ids)
+
+            encomendas = EncomendaItem.objects.filter(id__in=lista_ids)
+            return gerar_pdf_encomendas_atleta("Encomendas Sub-6/7", encomendas)
+
+        except Exception as e:
+            print(e)
+            return JsonResponse({'success': False, 'message': "Erro ao gerar PDF!"}, status=400)
+
+    return JsonResponse({"success": False, "message": "Método não permitido"}, status=405)
+
+
+def gerar_pdf_encomendas_atleta(titulo, contexto):
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4)
+    elements = []
+
+    titulo_style = ParagraphStyle(
+        'titulo',
+        fontName='Helvetica-Bold',
+        fontSize=18,
+        textColor=colors.HexColor("#183153"),
+        spaceAfter=40,
+        alignment=TA_CENTER
+
+    )
+
+    elements.append(Paragraph(titulo, titulo_style))
+
+    data = [["Atleta", "Equipamento", "Tamanho", "Data Pedido"]]  
+    for encomenda in contexto:
+        data.append([
+            str(encomenda.encomenda.atleta),
+            str(encomenda.equipamento),
+            str(encomenda.encomenda.tamanho),
+            encomenda.encomenda.data_pedido.strftime("%d/%m/%Y"),
+        ])
+
+    table = Table(data)
+ 
+    style = TableStyle([
+    # Cabeçalho
+    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#4B7BEC")),
+    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+
+    # Bordas
+    ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#CED4DA")),
+])
+
+# Linhas alternadas
+    for i, row in enumerate(data[1:], start=1):
+        bg_color = colors.HexColor("#F4F6F8") if i % 2 == 1 else colors.white
+        style.add('BACKGROUND', (0, i), (-1, i), bg_color)
+
+    table.setStyle(style)
+    
+
+    elements.append(table)
+    doc.build(elements)
+
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename="encomendas.pdf")
