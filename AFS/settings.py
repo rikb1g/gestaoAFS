@@ -17,11 +17,7 @@ DEBUG = env.bool('DJANGO_DEBUG', default=False)
 ENVIRONMENT = env('ENVIRONMENT', default='development')
 
 # ALLOWED_HOSTS
-if ENVIRONMENT == 'production':
-    ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
-else:
-    # Desenvolvimento: localhost e 127.0.0.1 sempre permitidos
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'])
 
 # Apps
 INSTALLED_APPS = [
@@ -102,3 +98,7 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://avsgestao.pythonanywhere.com"
+]
