@@ -8,6 +8,11 @@ function carregarConteudo(url) {
         .catch(error => console.error("Erro na requisição:", error));
 }   
 
+function formatarDataSimples(dataStr) {
+  if (!dataStr) return "";
+  let [ano, mes, dia] = dataStr.split("-");
+  return `${dia}/${mes}/${ano}`;
+}
 
 // ====================
 // Função para apagar atleta
@@ -99,15 +104,36 @@ $(document).on('submit', '#form-new-atleta', function(event) {
     });
 });
 
-function atletaSelect(ele){
+function escalaoSelect(ele){
     var escalaoAtelta = $(ele).val();
-    var url = `${window.urlAtletasList}?escalao=${escalaoAtelta}`
+    var url = `/atletas/atletas_list/?escalao=${escalaoAtelta}`
+    let bodyAtletas = $('.table-atletas tbody');
     fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("conteudo-dinamico").innerHTML = data;
-        })
-        .catch(error => console.error("Erro na requisição:", error));
-    
+    .then(response => response.json())
+    .then(data => {
+        if (data && data.resultados) {
+            let resultados = data.resultados;
+            bodyAtletas.empty();
+            resultados.forEach(item => {
+                let row = `
+                    <tr>
+                        <td><a href="#"
+                               hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax">${item.nome}</a></td>
+                        <td>${formatarDataSimples(item.data_nascimento)}</td>
+                        <td>${item.numero}</td>
+                        <td>${item.nome_camisola ? item.nome_camisola : 'N/A'}</td>
+                        <td><input type="checkbox" class="form-check-input" ${item.guarda_redes ? 'checked' : ''} disabled></td>
+                        <td class="linha">
+                            <a href="/atletas/update_atleta/${item.id}/" hx-push-url="true" class="link-ajax"><span class="material-symbols-outlined btn-operacoes"> edit</span></a>
+                            <a href="#" class="link-ajax" onclick="deleteAtleta('${item.id}', '${item.nome}')"><span class="material-symbols-outlined btn-operacoes">delete</span></a>
+                        </td>
+                    </tr>
+                `;
+                bodyAtletas.append(row);
+            });
+        }
+    })
+    .catch(error => console.error("Erro na requisição:", error));
+
    
 }

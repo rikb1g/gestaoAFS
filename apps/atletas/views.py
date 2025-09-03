@@ -24,18 +24,40 @@ class AtletaListView(ListView):
 
     def get_queryset(self):
         atleta_filter = self.request.GET.get('escalao')
+        ano_atual = datetime.now()
+
         if atleta_filter == 'todos':
             return Atleta.objects.all()
-        if atleta_filter != None:
-            print(atleta_filter)
-            print(f"calculo_data: {datetime.now().year - int(atleta_filter)}")
-            ano_atual = datetime.now()
+
+        if atleta_filter:
             if ano_atual.month >= 8:
-                print(f"calculo_data: {datetime.now().year - (int(atleta_filter) + 1)}")
-                return Atleta.objects.filter(data_nascimento__year=datetime.now().year - (int(atleta_filter) - 1))
-            else:    
-                return Atleta.objects.filter(data_nascimento__year=datetime.now().year - int(atleta_filter))
+                if atleta_filter == '6':
+                    return Atleta.objects.filter(
+                        data_nascimento__year__gt=ano_atual.year - int(atleta_filter)
+                    )
+                return Atleta.objects.filter(
+                    data_nascimento__year=ano_atual.year - (int(atleta_filter) - 1)
+                )
+            else:
+                if atleta_filter == '6':
+                    return Atleta.objects.filter(
+                        data_nascimento__year__gt=ano_atual.year - int(atleta_filter)
+                    )
+                return Atleta.objects.filter(
+                    data_nascimento__year=ano_atual.year - int(atleta_filter)
+                )
+
         return Atleta.objects.all()
+
+    def render_to_response(self, context, **response_kwargs):
+        # Se for AJAX, devolve JSON
+        if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
+            data_json = list(context["atletas"].values(
+                "id", "nome", "data_nascimento", "numero", "nome_camisola", "guarda_redes"
+            ))
+            return JsonResponse({"success": True, "resultados": data_json})
+        # Caso contrário, devolve HTML normal
+        return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(AtletaListView, self).get_context_data(**kwargs)
@@ -161,7 +183,7 @@ def gerar_pdf_camisolas_atletas(request):
     data = [["Nome", "Número", 'Tipo', "Tamanho"]]
     encomendas_equipamento_jogo = EncomendaItem.objects.filter(equipamento__nome__in=["jogo principal", "guarda-redes azul"]).order_by('encomenda__atleta__nome')
     for equipamento in encomendas_equipamento_jogo:
-        data.append([str(equipamento.encomenda.atleta).title(), str(equipamento.encomenda.atleta.numero), str(equipamento.equipamento).capitalize(), str(equipamento.encomenda.tamanho)])
+        data.append([str(equipamento.encomenda.atleta.nome_camisola).title(), str(equipamento.encomenda.atleta.numero), str(equipamento.equipamento).capitalize(), str(equipamento.encomenda.tamanho)])
 
     table = Table(data)
 
