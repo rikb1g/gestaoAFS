@@ -10,12 +10,6 @@
 
     <div class="header">
         <h1 class="titulo">Atletas AVS</h1>
-        <select name="escalao" id="selectEscalao" onchange="escalaoSelect(this)">
-            <option value="todosAtletas" disabled selected>Selecione um escalão</option>
-            <option value="7">Sub-7</option>
-            <option value='6'>Sub-6</option>
-            <option value="todos">Todos Atletas</option>
-        </select>
         <a href="{% url 'atletas:create_atleta' %}" class="btn-add link-ajax">
             <span class="material-symbols-outlined">add</span>
             Novo Atleta

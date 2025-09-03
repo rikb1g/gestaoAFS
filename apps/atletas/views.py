@@ -23,41 +23,7 @@ class AtletaListView(ListView):
     context_object_name = 'atletas'
 
     def get_queryset(self):
-        atleta_filter = self.request.GET.get('escalao')
-        ano_atual = datetime.now()
-
-        if atleta_filter == 'todos':
-            return Atleta.objects.all()
-
-        if atleta_filter:
-            if ano_atual.month >= 8:
-                if atleta_filter == '6':
-                    return Atleta.objects.filter(
-                        data_nascimento__year__gt=ano_atual.year - int(atleta_filter)
-                    )
-                return Atleta.objects.filter(
-                    data_nascimento__year=ano_atual.year - (int(atleta_filter) - 1)
-                )
-            else:
-                if atleta_filter == '6':
-                    return Atleta.objects.filter(
-                        data_nascimento__year__gt=ano_atual.year - int(atleta_filter)
-                    )
-                return Atleta.objects.filter(
-                    data_nascimento__year=ano_atual.year - int(atleta_filter)
-                )
-
-        return Atleta.objects.all()
-
-    def render_to_response(self, context, **response_kwargs):
-        # Se for AJAX, devolve JSON
-        if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
-            data_json = list(context["atletas"].values(
-                "id", "nome", "data_nascimento", "numero", "nome_camisola", "guarda_redes"
-            ))
-            return JsonResponse({"success": True, "resultados": data_json})
-        # Caso contrário, devolve HTML normal
-        return super().render_to_response(context, **response_kwargs)
+        return Atleta.objects.all().order_by('data_nascimento')
 
     def get_context_data(self, **kwargs):
         context = super(AtletaListView, self).get_context_data(**kwargs)
