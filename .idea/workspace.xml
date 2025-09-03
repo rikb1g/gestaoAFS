@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e33b5d8-9c38-43fa-a71c-d9cb44faa298" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AFS/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AFS/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/templates/atletas/atletas_list_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/templates/atletas/atletas_list_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/atletas.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/atletas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,31 +37,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python tests.Python tests for tests.AtletasTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.AtletasTest.test_criar_atleta.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.AtletasTest.test_delete_atleta.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.test_create_equipamento.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_guarda_redes.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_jogador.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in tests.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python.makemigrations.executor&quot;: &quot;Run&quot;,
-    &quot;Python.migrate.executor&quot;: &quot;Run&quot;,
-    &quot;Python.runserver.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ricso/OneDrive/Documentos/Django/gestaoAFS&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python tests.Python tests for tests.AtletasTest.executor": "Run",
+    "Python tests.Python tests for tests.AtletasTest.test_criar_atleta.executor": "Run",
+    "Python tests.Python tests for tests.AtletasTest.test_delete_atleta.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.test_create_equipamento.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_guarda_redes.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_jogador.executor": "Run",
+    "Python tests.Python tests in tests.py.executor": "Run",
+    "Python.makemigrations.executor": "Run",
+    "Python.migrate.executor": "Run",
+    "Python.runserver.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/ricso/OneDrive/Documentos/Django/gestorPausas",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\core\templates" />

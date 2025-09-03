@@ -99,3 +99,15 @@ $(document).on('submit', '#form-new-atleta', function(event) {
     });
 });
 
+function atletaSelect(ele){
+    var escalaoAtelta = $(ele).val();
+    var url = `${window.urlAtletasList}?escalao=${escalaoAtelta}`
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("conteudo-dinamico").innerHTML = data;
+        })
+        .catch(error => console.error("Erro na requisição:", error));
+    
+   
+}

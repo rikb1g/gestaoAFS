@@ -1,7 +1,9 @@
+
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
+from django.utils.timezone import datetime
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from apps.atletas.models import Atleta
 from apps.atletas.forms import AtletaForm
@@ -21,6 +23,18 @@ class AtletaListView(ListView):
     context_object_name = 'atletas'
 
     def get_queryset(self):
+        atleta_filter = self.request.GET.get('escalao')
+        if atleta_filter == 'todos':
+            return Atleta.objects.all()
+        if atleta_filter != None:
+            print(atleta_filter)
+            print(f"calculo_data: {datetime.now().year - int(atleta_filter)}")
+            ano_atual = datetime.now()
+            if ano_atual.month >= 8:
+                print(f"calculo_data: {datetime.now().year - (int(atleta_filter) + 1)}")
+                return Atleta.objects.filter(data_nascimento__year=datetime.now().year - (int(atleta_filter) - 1))
+            else:    
+                return Atleta.objects.filter(data_nascimento__year=datetime.now().year - int(atleta_filter))
         return Atleta.objects.all()
 
     def get_context_data(self, **kwargs):
