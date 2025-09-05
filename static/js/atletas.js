@@ -104,3 +104,51 @@ $(document).on('submit', '#form-new-atleta', function(event) {
     });
 });
 
+
+
+
+function filterAtletasEscala(ele){
+    const escalao = ele.value;
+    const url = `/atletas/atletas_list_escalao/?escalao=${escalao}`
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                let resultados = data.resultados;
+                var tableAtletasBody = $(".table-atletas tbody");
+                tableAtletasBody.empty();
+
+                resultados.forEach(item =>{
+                    let row = `
+                     <tr>
+                        <td><a href="/atletas/atleta_detail/${item.id}/"
+                         hx-get= "/atletas/atleta_detail/${item.id}/"
+                               hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax">${item.nome}</a></td>
+                        <td>${formatarDataSimples(item.data_nascimento)}</td>
+                        <td>${item.numero}</td>
+                        <td>${item.nome_camisola ? item.nome_camisola : 'N/A'}</td>
+                        <td><input type="checkbox" class="form-check-input" ${item.guarda_redes ? 'checked' : ''} disabled></td>
+                        <td class="linha">
+                            <a href="/atletas/update_atleta/${item.id}/" hx-push-url="true" class="link-ajax"><span class="material-symbols-outlined btn-operacoes"> edit</span></a>
+                            <a href="#" class="link-ajax" onclick="deleteAtleta('${item.id}', '${item.nome}')"><span class="material-symbols-outlined btn-operacoes">delete</span></a>
+                        </td>
+                    </tr>
+                `
+                 tableAtletasBody.append(row);
+                })
+               
+                
+            }
+        })
+        .catch(error => console.error("Erro na requisição:", error));    
+}
+
+
+function imprimirCamisolas(event) {
+    event.preventDefault()
+    const filtro = document.getElementById("escalaoAtleta").value;
+    console.log(filtro)
+    const url = `/atletas/pdf_camisolas_atletas/?escalao=${filtro}`;
+    window.open(url, '_blank');
+}

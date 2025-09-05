@@ -10,6 +10,12 @@
 
     <div class="header">
         <h1 class="titulo">Atletas AVS</h1>
+        <select name="escalao" id="escalaoAtleta" onchange="filterAtletasEscala(this)">
+            <option value="todosNA" disabled selected>Selecione um escalão</option>
+            <option value="todos">Selecionar todos</option>
+            <option value="7">Sub-7</option>
+            <option value="6">Sub-6</option>
+        </select>
         <a href="{% url 'atletas:create_atleta' %}" class="btn-add link-ajax">
             <span class="material-symbols-outlined">add</span>
             Novo Atleta
@@ -60,12 +66,11 @@
     </div>
     <div class="header">
         <div class="me-auto">
-            <a href="{% url 'atletas:pdf_camisolas_atletas' %}" class="btn-add">
+            <button type="button" class="btn-add" onclick="imprimirCamisolas(event)">
             <span class="material-symbols-outlined">print</span>
             Imprimir Nº Camisolas
-        </a>
-    </div>
-        </div>
+            </button>
+
         
     
 </div>

@@ -10,5 +10,6 @@ urlpatterns = [
     path('atleta_detail/<int:pk>/', views.AtletaDetailView.as_view(), name='detail_atleta'),
     path('update_atleta/<int:pk>/', views.AtletaUpdateView.as_view(), name='update_atleta'),
     path('delete_atleta/<int:pk>/', atletas_delete, name='delete_atleta'),
-    path('pdf_camisolas_atletas', views.gerar_pdf_camisolas_atletas, name='pdf_camisolas_atletas'),
+    path('pdf_camisolas_atletas/', views.gerar_pdf_camisolas_atletas, name='pdf_camisolas_atletas'),
+    path('atletas_list_escalao/', views.atletas_escalao_json, name='atletals_list_escalao'),
 ]

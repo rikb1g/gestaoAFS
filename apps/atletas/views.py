@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
+from django.core import serializers
 from django.utils.timezone import datetime
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from apps.atletas.models import Atleta
@@ -131,6 +132,8 @@ def atletas_delete(request, pk):
     
 
 def gerar_pdf_camisolas_atletas(request):
+    escalao = request.GET.get('escalao')
+    print(escalao)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="relatorio.pdf"'
     doc = SimpleDocTemplate(response, pagesize=A4)
@@ -147,7 +150,15 @@ def gerar_pdf_camisolas_atletas(request):
     )
     elements.append(Paragraph("Relatório de Camisolas", titulo_style))
     data = [["Nome", "Número", 'Tipo', "Tamanho"]]
-    encomendas_equipamento_jogo = EncomendaItem.objects.filter(equipamento__nome__in=["jogo principal", "guarda-redes azul"]).order_by('encomenda__atleta__nome')
+    if escalao == 'todos':
+        atletas = Atleta.objects.all().order_by('data_nascimento')
+    elif escalao == '6':
+        atletas = Atleta.objects.filter(data_nascimento__year__gt=(datetime.now().year - 6)).order_by('data_nascimento')
+    elif escalao == '7':
+        atletas = Atleta.objects.filter(data_nascimento__year=(datetime.now().year - 6)).order_by('data_nascimento')
+    else:
+        atletas = Atleta.objects.all().order_by('data_nascimento')
+    encomendas_equipamento_jogo = EncomendaItem.objects.filter(encomenda__atleta__in=atletas,equipamento__nome__in=["jogo principal", "guarda-redes azul"]).order_by('encomenda__atleta__data_nascimento')
     for equipamento in encomendas_equipamento_jogo:
         data.append([str(equipamento.encomenda.atleta.nome_camisola).title(), str(equipamento.encomenda.atleta.numero), str(equipamento.equipamento).capitalize(), str(equipamento.encomenda.tamanho)])
 
@@ -176,5 +187,41 @@ def gerar_pdf_camisolas_atletas(request):
     return response
 
 
-    
-    
+
+def atletas_escalao_json(request):
+    escalao_filter = request.GET.get('escalao')
+    print(escalao_filter)
+
+    if escalao_filter == 'todos':
+        print("todos")
+        qs = Atleta.objects.all()
+
+    elif escalao_filter == '6':
+        print("escalao 6")
+        if datetime.now().month >= 8:
+            qs = Atleta.objects.filter(
+                data_nascimento__year__gt=(datetime.now().year - 6)
+            )
+        else:
+            qs = Atleta.objects.filter(
+                data_nascimento__year__gt=(datetime.now().year - 7)
+            )
+
+    elif escalao_filter == '7':
+        print("escalao 7")
+        if datetime.now().month >= 8:
+            qs = Atleta.objects.filter(
+                data_nascimento__year=(datetime.now().year - 6)
+            )
+        else:
+            qs = Atleta.objects.filter(
+                data_nascimento__year=(datetime.now().year - 7)
+            )
+
+    else:
+        qs = Atleta.objects.none()
+
+    data_json = list(qs.values(
+        "id", "nome", "data_nascimento", "numero", "nome_camisola", "guarda_redes"
+    ))
+    return JsonResponse({'resultados': data_json})
