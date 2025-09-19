@@ -131,6 +131,38 @@ def atletas_delete(request, pk):
         return JsonResponse({'success': False,'message': "Erro ao eliminar atleta!"}, status=400)
     
 
+def gerar_pdf_lista_atletas(request):
+    escalao = request.GET.get('escalao')
+    response = HttpResponse(content_type= 'aplication/pdf')
+    response['Content-Disposition'] = 'attachment; filename="relatorio.pdf"'
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    elements = []
+
+    titulo_style = ParagraphStyle(
+        'titulo',
+        fontName='Helvetica-Bold',
+        fontSize=18,
+        textColor=colors.HexColor("#183153"),
+        spaceAfter=40,
+        alignment=TA_CENTER
+
+    )
+    elements.append(Paragraph(f"Lista de Atletas - Escalação Sub-{str(escalao).upper() if escalao != 'todos' else escalao}", titulo_style))
+    data = [["Nome", "Data de Nascimento", "Número Camisola"]]
+    if escalao == 'todos':
+        atletas = Atleta.objects.all().order_by('data_nascimento')
+    elif escalao == '6':
+        atletas = Atleta.objects.filter(data_nascimento__year__gt=(2019)).order_by('data_nascimento')
+    elif escalao == '7':
+        atletas = Atleta.objects.filter(data_nascimento__year=(2019)).order_by('data_nascimento')
+    for atleta in atletas:
+        data.append([atleta.nome,atleta.data_nascimento, atleta.numero])
+    table = Table(data)
+    table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 1, colors.black)]))
+    elements.append(table)
+    doc.build(elements)
+    return response
+
 def gerar_pdf_camisolas_atletas(request):
     escalao = request.GET.get('escalao')
     print(escalao)
@@ -153,9 +185,9 @@ def gerar_pdf_camisolas_atletas(request):
     if escalao == 'todos':
         atletas = Atleta.objects.all().order_by('data_nascimento')
     elif escalao == '6':
-        atletas = Atleta.objects.filter(data_nascimento__year__gt=(datetime.now().year - 6)).order_by('data_nascimento')
+        atletas = Atleta.objects.filter(data_nascimento__year__gt=(2019)).order_by('data_nascimento')
     elif escalao == '7':
-        atletas = Atleta.objects.filter(data_nascimento__year=(datetime.now().year - 6)).order_by('data_nascimento')
+        atletas = Atleta.objects.filter(data_nascimento__year=(2020)).order_by('data_nascimento')
     else:
         atletas = Atleta.objects.all().order_by('data_nascimento')
     encomendas_equipamento_jogo = EncomendaItem.objects.filter(encomenda__atleta__in=atletas,equipamento__nome__in=["jogo principal", "guarda-redes azul"]).order_by('encomenda__atleta__data_nascimento')

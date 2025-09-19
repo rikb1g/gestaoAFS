@@ -12,4 +12,5 @@ urlpatterns = [
     path('delete_atleta/<int:pk>/', atletas_delete, name='delete_atleta'),
     path('pdf_camisolas_atletas/', views.gerar_pdf_camisolas_atletas, name='pdf_camisolas_atletas'),
     path('atletas_list_escalao/', views.atletas_escalao_json, name='atletals_list_escalao'),
+    path('pdf_atletas_escalao_pdf/', views.gerar_pdf_lista_atletas, name='pdf_atletas_escalao'),
 ]
