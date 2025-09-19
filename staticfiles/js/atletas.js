@@ -152,3 +152,12 @@ function imprimirCamisolas(event) {
     const url = `/atletas/pdf_camisolas_atletas/?escalao=${filtro}`;
     window.open(url, '_blank');
 }
+
+
+function imprimirAtletas(event) {
+    event.preventDefault()
+    const filtro = document.getElementById("escalaoAtleta").value;
+    console.log(filtro)
+    const url = `/atletas/pdf_atletas_escalao_pdf/?escalao=${filtro}`;
+    window.open(url, '_blank');
+}
