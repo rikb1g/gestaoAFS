@@ -1,12 +1,14 @@
 from django import forms
 from apps.atletas.models import Atleta
 from django.utils import timezone
+from apps.jogos.models import Equipas
 
 
 class AtletaForm(forms.ModelForm):
+    
     class Meta:
         model = Atleta
-        fields = ['nome', 'data_nascimento', 'numero', 'nome_camisola', 'encarregado', 'telefone', 'email', 'guarda_redes', 'ficha']
+        fields = ['nome', 'data_nascimento', 'numero', 'nome_camisola', 'encarregado', 'telefone', 'email','equipa', 'guarda_redes', 'ficha']
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome do atleta'}),
             'data_nascimento': forms.DateInput(attrs={'class': 'form-control datepicker', 'placeholder': 'Data de nascimento',                                       'type': 'date'}),
@@ -16,6 +18,7 @@ class AtletaForm(forms.ModelForm):
             'telefone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefone do atleta'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email do atleta'}),
             'guarda_redes': forms.CheckboxInput(attrs={'class': 'form-check-input', 'placeholder': 'Guarda redes do atleta'}),
+            'equipa': forms.Select(attrs={'class': 'form-control'}),
             'ficha': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Ficha do atleta'}),
         }
 

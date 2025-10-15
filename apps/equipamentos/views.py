@@ -138,7 +138,7 @@ class EncomendaItemCreateView(CreateView):
     def get(self,request):
         form_encomenda  = EncomendaForm()
         form_item= EncomendaItemForm()
-        print(form_item)
+        
 
         template = 'equipamentos/encomenda_item_create_partial.html' if request.headers.get('HX-Request') or request.headers.get('x-requested-with') == 'XMLHttpRequest' else 'equipamentos/encomenda_item_create.html'
 

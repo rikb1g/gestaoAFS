@@ -66,10 +66,8 @@ $(document).on('submit', '#form-new-atleta', function(event) {
     event.preventDefault();
 
     const formData = new FormData(this);
-    console.log("Form data:", formData);
     const url = $(this).attr('data-url');
-    console.log("URL:", url);
-    console.log("aqui");
+    
 
     fetch(url, {
         method: 'POST',
@@ -129,6 +127,7 @@ function filterAtletasEscala(ele){
                         <td>${item.numero}</td>
                         <td>${item.nome_camisola ? item.nome_camisola : 'N/A'}</td>
                         <td><input type="checkbox" class="form-check-input" ${item.guarda_redes ? 'checked' : ''} disabled></td>
+                        <td>${item.equipa ? item.equipa : 'N/A'}</td>
                         <td class="linha">
                             <a href="/atletas/update_atleta/${item.id}/" hx-push-url="true" class="link-ajax"><span class="material-symbols-outlined btn-operacoes"> edit</span></a>
                             <a href="#" class="link-ajax" onclick="deleteAtleta('${item.id}', '${item.nome}')"><span class="material-symbols-outlined btn-operacoes">delete</span></a>

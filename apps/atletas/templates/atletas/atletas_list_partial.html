@@ -13,8 +13,9 @@
         <select name="escalao" id="escalaoAtleta" onchange="filterAtletasEscala(this)">
             <option value="todosNA" disabled selected>Selecione um escalão</option>
             <option value="todos">Selecionar todos</option>
-            <option value="7">Sub-7</option>
-            <option value="6">Sub-6</option>
+            {% for equipa in equipas %}
+            <option value='{{equipa.id}}'>{{ equipa.nome }}</option>
+            {% endfor %}
         </select>
         <a href="{% url 'atletas:create_atleta' %}" class="btn-add link-ajax">
             <span class="material-symbols-outlined">add</span>
@@ -32,6 +33,7 @@
                         <th>Número</th>
                         <th>Nome Camisola</th>
                         <th>Guarda-redes</th>
+                        <th>Equipa</th>
                         <th>Operações</th>
                     </tr>
                 </thead>
@@ -44,7 +46,9 @@
                         <td>{{ atleta.data_nascimento|date:"d/m/Y" }}</td>
                         <td>{{ atleta.numero }}</td>
                         <td>{% if atleta.nome_camisola %}{{ atleta.nome_camisola }}{% else %}N/A{% endif %}</td>
+
                         <td><input type="checkbox" class="form-check-input" {% if atleta.guarda_redes %} checked {% endif %} disabled> </td>
+                        <td>{% if atleta.equipa %}{{ atleta.equipa }}{% else %}N/A{% endif %}</td>
                         <td class="linha">
                             <a href="{% url 'atletas:update_atleta' atleta.id %}" class="link-ajax"><span
                                     class="material-symbols-outlined btn-operacoes"> edit</span></a>

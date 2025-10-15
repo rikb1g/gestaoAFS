@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.atletas.models import Atleta
+
 
 class Equipas(models.Model):
     nome = models.CharField(max_length=100)
@@ -12,25 +12,28 @@ class Equipas(models.Model):
 
 
 class Jogos(models.Model):
-    adversario = models.CharField(max_length=100)
-    data = models.DateTimeField(null=True,blank=True)
-    casa = models.BooleanField(default=True)
+    jornada = models.IntegerField()
+    visitado = models.ForeignKey(Equipas, on_delete=models.CASCADE, related_name='visitado')
+    visitante = models.ForeignKey(Equipas, on_delete=models.CASCADE, related_name='adversario')
+    data = models.DateField(default=None)
+    golos_visitado= models.IntegerField(default=0)
+    golos_visitante = models.IntegerField(default=0)
+    titulares = models.ManyToManyField('atletas.Atleta', related_name='titulares', null=True, blank=True)
+    suplentes = models.ManyToManyField('atletas.Atleta', related_name='suplentes', null=True, blank=True)
+    capitao = models.ForeignKey('atletas.Atleta', on_delete=models.CASCADE, related_name='capitao')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.nome
 
 
-class EquipaJogo(models.Model):
-    atleta = models.ForeignKey(Atleta, on_delete=models.CASCADE)
+class EstatisticaJogo(models.Model):
     jogo = models.ForeignKey(Jogos, on_delete=models.CASCADE)
-    capitao = models.BooleanField(default=False)
-    titular = models.BooleanField(default=False)
+    atleta = models.ForeignKey('atletas.Atleta', on_delete=models.CASCADE)
     golos = models.IntegerField(default=0)
     assistencias = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f"{self.atleta} - {self.jogo}"

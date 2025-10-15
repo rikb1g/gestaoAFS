@@ -1,4 +1,5 @@
 from django.db import models
+from apps.jogos.models import Equipas
 
 
 
@@ -12,6 +13,7 @@ class Atleta(models.Model):
     guarda_redes = models.BooleanField(default=False)
     ficha = models.FileField(upload_to='fichas/', null=True, blank=True)
     nome_camisola = models.CharField(max_length=100, null=True, blank=True)
+    equipa = models.ForeignKey(Equipas, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

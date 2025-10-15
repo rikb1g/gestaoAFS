@@ -8,6 +8,16 @@ window.addEventListener('load', () => {
     document.body.classList.remove('preload');
 });
 
+
+function carregarConteudo(url) {
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("conteudo-dinamico").innerHTML = html;
+            history.pushState({ url: url }, "", url); 
+        })
+        .catch(error => console.error("Erro na requisição:", error));
+}
 document.addEventListener('DOMContentLoaded', function() {
     const tooggleBtn = document.getElementById("theme-toggle");
     const body = document.body;

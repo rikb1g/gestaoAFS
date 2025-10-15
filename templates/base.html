@@ -33,7 +33,7 @@
         <div class="menu-links">
             <a href="{% url 'atletas:atletas_list' %}" class="btn-menu">Atletas</a>
             <a href="{% url 'equipamentos:encomendas_equipamentos_list' 'todos' %}" class="btn-menu">Encomendas</a>
-            <a href="#" class="btn-menu">Jogos</a>
+            <a href="{% url 'jogos:games_list' %}" class="btn-menu">Jogos</a>
         </div>
 
         <button id="theme-toggle" class="btn btn-outline-secondary ">🌙 Escuro</button>
@@ -57,9 +57,10 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
-<script src="{% static 'js/geral.js'%}?v=1.0"></script>
-<script src="{% static 'js/atletas.js' %}?v=1.0"></script>
-<script src="{% static 'js/equipamentos.js' %}?v=1.0"></script>
+<script src="{% static 'js/geral.js'%}?v=1.1"></script>
+<script src="{% static 'js/atletas.js' %}?v=1.1"></script>
+<script src="{% static 'js/equipamentos.js' %}?v=1.1"></script>
+<script src="{% static 'js/jogos.js'%}?v=1.0"></script>
 
 
 </html>

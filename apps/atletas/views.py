@@ -8,7 +8,7 @@ from django.utils.timezone import datetime
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from apps.atletas.models import Atleta
 from apps.atletas.forms import AtletaForm
-from apps.jogos.models import Jogos
+from apps.jogos.models import Jogos, Equipas
 from apps.equipamentos.models import EncomendaItem
 
 from reportlab.lib.pagesizes import A4
@@ -30,6 +30,7 @@ class AtletaListView(ListView):
         context = super(AtletaListView, self).get_context_data(**kwargs)
         context['altetas'] = Atleta.objects.all()
         context['jogos'] = Jogos.objects.all()
+        context['equipas'] = Equipas.objects.filter(nome__contains='AVS').order_by('nome')
         return context
     
     def get_template_names(self):
@@ -228,32 +229,21 @@ def atletas_escalao_json(request):
         print("todos")
         qs = Atleta.objects.all()
 
-    elif escalao_filter == '6':
-        print("escalao 6")
-        if datetime.now().month >= 8:
-            qs = Atleta.objects.filter(
-                data_nascimento__year__gt=(datetime.now().year - 6)
-            )
-        else:
-            qs = Atleta.objects.filter(
-                data_nascimento__year__gt=(datetime.now().year - 7)
-            )
+    else: 
+        qs = Atleta.objects.filter(equipa__id=escalao_filter)
+        print(qs)
 
-    elif escalao_filter == '7':
-        print("escalao 7")
-        if datetime.now().month >= 8:
-            qs = Atleta.objects.filter(
-                data_nascimento__year=(datetime.now().year - 6)
-            )
-        else:
-            qs = Atleta.objects.filter(
-                data_nascimento__year=(datetime.now().year - 7)
-            )
-
-    else:
-        qs = Atleta.objects.none()
-
-    data_json = list(qs.values(
-        "id", "nome", "data_nascimento", "numero", "nome_camisola", "guarda_redes"
-    ))
-    return JsonResponse({'resultados': data_json})
+    
+    atletas_list = [
+        {
+            "id": atleta.id,
+            "nome": atleta.nome,
+            "numero": atleta.numero,
+            "nome_camisola": atleta.nome_camisola,
+            'data_nascimento': atleta.data_nascimento,
+            "guarda_redes": atleta.guarda_redes,
+            "equipa": atleta.equipa.nome if atleta.equipa else "",
+        }
+        for atleta in qs
+    ]
+    return JsonResponse({'resultados': atletas_list})
