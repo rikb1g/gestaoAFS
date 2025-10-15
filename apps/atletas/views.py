@@ -134,6 +134,7 @@ def atletas_delete(request, pk):
 
 def gerar_pdf_lista_atletas(request):
     escalao = request.GET.get('escalao')
+    nome_escalao = Equipas.objects.get(id=escalao).nome
     response = HttpResponse(content_type= 'aplication/pdf')
     response['Content-Disposition'] = 'attachment; filename="relatorio.pdf"'
     doc = SimpleDocTemplate(response, pagesize=A4)
@@ -148,14 +149,12 @@ def gerar_pdf_lista_atletas(request):
         alignment=TA_CENTER
 
     )
-    elements.append(Paragraph(f"Lista de Atletas - Escalação Sub-{str(escalao).upper() if escalao != 'todos' else escalao}", titulo_style))
+    elements.append(Paragraph(f"Lista de Atletas - {str(nome_escalao).upper() if escalao != 'todos' else nome_escalao}", titulo_style))
     data = [["Nome", "Data de Nascimento", "Número Camisola"]]
     if escalao == 'todos':
         atletas = Atleta.objects.all().order_by('data_nascimento')
-    elif escalao == '6':
-        atletas = Atleta.objects.filter(data_nascimento__year__gt=(2019)).order_by('data_nascimento')
-    elif escalao == '7':
-        atletas = Atleta.objects.filter(data_nascimento__year=(2019)).order_by('data_nascimento')
+    else:
+        atletas = Atleta.objects.filter(equipa__id=escalao).order_by('data_nascimento')
     for atleta in atletas:
         data.append([atleta.nome,atleta.data_nascimento, atleta.numero])
     table = Table(data)
@@ -185,12 +184,8 @@ def gerar_pdf_camisolas_atletas(request):
     data = [["Nome", "Número", 'Tipo', "Tamanho"]]
     if escalao == 'todos':
         atletas = Atleta.objects.all().order_by('data_nascimento')
-    elif escalao == '6':
-        atletas = Atleta.objects.filter(data_nascimento__year__gt=(2019)).order_by('data_nascimento')
-    elif escalao == '7':
-        atletas = Atleta.objects.filter(data_nascimento__year=(2020)).order_by('data_nascimento')
     else:
-        atletas = Atleta.objects.all().order_by('data_nascimento')
+        atletas = Atleta.objects.filter(equipa__id=escalao).order_by('data_nascimento')
     encomendas_equipamento_jogo = EncomendaItem.objects.filter(encomenda__atleta__in=atletas,equipamento__nome__in=["jogo principal", "guarda-redes azul"]).order_by('encomenda__atleta__data_nascimento')
     for equipamento in encomendas_equipamento_jogo:
         data.append([str(equipamento.encomenda.atleta.nome_camisola).title(), str(equipamento.encomenda.atleta.numero), str(equipamento.equipamento).capitalize(), str(equipamento.encomenda.tamanho)])
