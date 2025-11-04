@@ -11,4 +11,9 @@ urlpatterns = [
     path('nova_equipa', views.EquipaCreateView.as_view(), name='new_team'),
     path('update_equipa/<int:pk>/', views.EquipaUpdateView.as_view(), name='update_team'),
     path('delete_equipa/<int:pk>/', views.equipaDelete, name='delete_team'),
+    path('estatistica_jogo/<int:pk>/', views.estatistica_jogo, name='estatistica_jogo'),
+    path('iniciar_jogo/<int:id_jogo>', views.iniciar_jogo, name='iniciar_jogo'),
 ]
+
+
+

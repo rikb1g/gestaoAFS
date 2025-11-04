@@ -5,7 +5,7 @@ from apps.jogos.models import Jogos, EstatisticaJogo, Equipas
 class JogosForm(forms.ModelForm):
     class Meta:
         model = Jogos
-        fields = '__all__'
+        fields = 'jornada', 'visitado', 'visitante', 'data', 'golos_visitado', 'golos_visitante', 'capitao','titulares', 'suplentes'
         widgets = {
             'jornada': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Jornada'}),
             'visitado': forms.Select(attrs={'class': 'form-control'}),

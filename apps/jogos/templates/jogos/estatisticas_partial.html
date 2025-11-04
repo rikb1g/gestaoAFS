@@ -1,0 +1,39 @@
+<header class="p-4 d-flex flex-column align-items-center">
+    <!-- Botões centralizados -->
+    <div class="d-flex gap-2 mb-3 justify-content-center">
+        <button type="button" id="btn-inicio" onclick="iniciarJogo(event)" class="btn btn-outline-secondary">
+            <span class="material-symbols-outlined">play_circle</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary">
+            <span class="material-symbols-outlined">pause_circle</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary">
+            <span class="material-symbols-outlined">stop_circle</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary">
+            <span class="material-symbols-outlined">check_circle</span>
+        </button>
+    </div>
+
+   
+    <div class="fs-2 fw-bold mb-2 text-center">Tempo</div>
+
+    <div id="game-timer" data-inicio="{{ jogo.inicio }}"  class="display-1 fw-bold text-center">00:00</div>
+</header>
+
+
+<section class="p-4 d-flex flex-column align-items-center">
+    <h2 class="font-bold">{{jogo.equipa}}</h2>
+    <ul class="list-unstyled">
+        {% for jogador in estatisticas %}
+            <li class="d-flex align-items-center">
+                <input type="checkbox" class="form-check-input atletasSelect" onchange="alterarEmJogo(event,'{{jogador.id_atleta}}')" name="jogadoresEmJogo" value="{{jogador.id_atleta}}"  data-jogo="{{jogador.jogo.id}}" {% if jogador.em_campo %} checked {% endif %}></input>
+                <span class="ms-2" >{{jogador.atleta}}</span>
+                <span class="ms-auto">{{jogador.golos}} golos</span>
+                <span class="ms-2 tempo-decorrido-jogo" data-inicio="{{jogador.inicio}}"></span>
+                <span class="ms-2">{{jogador.total_minutos}}</span></span>
+            </li>
+        {% endfor %}
+        
+    </ul>
+</section>

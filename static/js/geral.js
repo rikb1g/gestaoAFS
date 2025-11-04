@@ -1,3 +1,15 @@
+function getCSRFToken() {
+    // Acessa diretamente o cookie csrftoken
+    const csrfToken = document.cookie
+        .split(';')
+        .map(cookie => cookie.trim())
+        .find(cookie => cookie.startsWith('csrftoken='));
+
+    // Se encontrado, extrai o valor
+    return csrfToken ? csrfToken.split('=')[1] : null;
+}
+
+
 function menu() {
     const menu = document.getElementById('menu');
     menu.classList.toggle('show');
@@ -7,6 +19,7 @@ document.body.classList.add('preload');
 window.addEventListener('load', () => {
     document.body.classList.remove('preload');
 });
+
 
 
 function carregarConteudo(url) {
@@ -71,6 +84,7 @@ $(document).on('click', '.btn-menu', function (e) {
       $.get(url, function (data) {
             $('#conteudo-dinamico').html(data)
             window.history.pushState(null, null, url)
+            setTimeout(iniciarCronometro, 50);
        
       })
              
@@ -84,6 +98,7 @@ $(document).on('click', '.link-ajax', function (e) {
       $.get(url, function (data) {
             $('#conteudo-dinamico').html(data)
             window.history.pushState(null, null, url)
+            setTimeout(iniciarCronometro, 50);
        
       })
              

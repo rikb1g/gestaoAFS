@@ -22,7 +22,7 @@
     <form method="post" id="form-new-game" {% if object %} data-url="{% url 'jogos:update_game' object.pk %}" {% else %} data-url="{% url 'jogos:new_game' %}" {% endif %}>
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" >Criar Jogo</button>
+        <button type="submit" class="btn btn-secondary">{% if object %}Editar Jogo{% else %}Criar Jogo {% endif %}</button>
     </form>
 </div>
 </div>

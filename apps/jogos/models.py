@@ -18,6 +18,9 @@ class Jogos(models.Model):
     data = models.DateField(default=None)
     golos_visitado= models.IntegerField(default=0)
     golos_visitante = models.IntegerField(default=0)
+    inicio_jogo = models.DateTimeField(default=None,null=True,blank=True)
+    segunda_parte = models.BooleanField(default=False, null=True, blank=True)
+    fim_jogo = models.DateTimeField(default=None,null=True,blank=True)
     titulares = models.ManyToManyField('atletas.Atleta', related_name='titulares', blank=True)
     suplentes = models.ManyToManyField('atletas.Atleta', related_name='suplentes', blank=True)
     capitao = models.ForeignKey('atletas.Atleta', on_delete=models.CASCADE, related_name='capitao')
@@ -26,14 +29,21 @@ class Jogos(models.Model):
 
 
     def __str__(self):
-        return self.nome
+        return f"{self.jornada} - {self.visitado} vs {self.visitante}" 
 
 
 class EstatisticaJogo(models.Model):
     jogo = models.ForeignKey(Jogos, on_delete=models.CASCADE)
     atleta = models.ForeignKey('atletas.Atleta', on_delete=models.CASCADE)
     golos = models.IntegerField(default=0)
+    inicio= models.DateTimeField(default=None,null=True,blank=True)
+    fim = models.DateTimeField(default=None,null=True,blank=True)
+    total_minutos = models.FloatField(default=0)
     assistencias = models.IntegerField(default=0)
+    em_campo = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.atleta} - {self.jogo}"
 

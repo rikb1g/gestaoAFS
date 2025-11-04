@@ -2,8 +2,60 @@
 
 <div class="d-flex">
     <div class="div">
-        <a href="{% url 'jogos:new_game'  %}"  hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax">Novo Jogo</a>
+        <a href="{% url 'jogos:new_game'  %}" hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax">Novo
+            Jogo</a>
     </div>
 
 
 </div>
+
+
+
+<div class="container">
+    <p class="text-center fs-1">Jogos</p>
+
+    <div class="table-container">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Visitado</th>
+                    <th scope="col">Visitante</th>
+                    <th>Resultado</th>
+                    <th scope="col">Data</th>
+                    <th>Operações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jogo in jogos %}
+                <tr>
+                    <td>{{ jogo.visitado }}</td>
+                    <td>{{ jogo.visitante }}</td>
+                    <td>{{ jogo.golos_visitado }} - {{ jogo.golos_visitante }}</td>
+                    <td>{{ jogo.data }}</td>
+                    <td class="linha">
+                        <a href="{% url 'jogos:update_game' jogo.pk %}" hx-get="{% url 'jogos:update_game' jogo.pk %}"
+                            hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax"><span
+                                class="material-symbols-outlined">
+                                edit
+                            </span></a>
+
+                        <button type="button" class="btn-remove" onclick="resumoJogo(event, '{{ jogo.pk }}')"><span
+                                class="material-symbols-outlined">
+                                timer_play
+                            </span></button>
+                        <button type="button" class="btn-remove"><span class="material-symbols-outlined">
+                                sports_and_outdoors
+                            </span></button>
+                        <button type="button" class="btn-remove" onclick="eliminarJogo(event, '{{ jogo.pk }}')"><span class="material-symbols-outlined">
+                                delete
+                            </span></button>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+
+
+
+    </div>
