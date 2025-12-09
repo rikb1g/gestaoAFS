@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView
 from django.template.loader import render_to_string
-from apps.jogos.models import Jogos, Equipas, EstatisticaJogo
+from apps.jogos.models import Jogos, Equipas, EstatisticaJogo,HistoricoSubstituição
 from apps.jogos.forms import JogosForm, EquipasForm
 
 
@@ -233,51 +233,33 @@ def equipaDelete(request, pk):
 
 def estatistica_jogo(request, pk):
     jogo = Jogos.objects.get(pk=pk)
-    estatisticas = EstatisticaJogo.objects.filter(jogo=jogo)
-    data = {}
+    estatisticas = EstatisticaJogo.objects.filter(jogo=jogo).order_by('-em_campo')
 
     if jogo.visitado.nome.startswith("AVS"):
-        data['jogo'] = {
-        'jornada': jogo.jornada,
-        'equipa': jogo.visitado,
-        'inicio': jogo.inicio_jogo.isoformat() if jogo.inicio_jogo else None,
-        
-    }   
-        print(jogo.inicio_jogo.isoformat() if jogo.inicio_jogo else None)
+        equipa = jogo.visitado.nome
     elif jogo.visitante.nome.startswith("AVS"):
-        data['jogo'] = {
-        'jornada': jogo.jornada,
-        'equipa': jogo.visitante.nome,
-        'inicio': jogo.inicio_jogo.isoformat() if jogo.inicio_jogo else None,
-    }
-        print(jogo.inicio_jogo.isoformat() if jogo.inicio_jogo else None)
+        equipa = jogo.visitante.nome
     else:
-        data['jogo'] = None  
+        equipa = None
 
-    print(data['jogo'])
+    data = {
+        'jogo': {
+            'id': jogo.id,
+            'visitado': jogo.visitado,
+            'visitante': jogo.visitante,
+            'golos_visitado': jogo.golos_visitado,
+            'golos_visitante': jogo.golos_visitante,
+            'jornada': jogo.jornada,
+            'equipa': equipa,
+            'inicio': jogo.inicio_jogo.isoformat() if jogo.inicio_jogo else None,
+        },
+        'estatisticas': estatisticas,
+        'jogo_id': jogo.id,
+    }
+    print(data)
 
-    data['estatisticas'] = []
-    for estatistica in estatisticas:
-        data['estatisticas'].append({
-            'id_atleta': estatistica.atleta.id,
-            'jogo': estatistica.jogo,
-            'jogo_id': estatistica.jogo.id,
-            'atleta': estatistica.atleta.nome,
-            'golos': estatistica.golos,
-            'inicio': estatistica.inicio,
-            'assistencias': estatistica.assistencias,
-            'total_minutos': estatistica.total_minutos,
-            'em_campo': estatistica.em_campo
-        })
-    data['estatisticas'] = sorted(
-    data['estatisticas'],
-    key=lambda x: x['em_campo'],
-    reverse=True
-    )
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return render(request, template_name='jogos/estatisticas_partial.html',context=data)
-
-    return render(request, template_name='jogos/estatisticas.html',context=data)
+    template = 'jogos/estatisticas_partial.html' if request.headers.get('x-requested-with') == 'XMLHttpRequest' else 'jogos/estatisticas.html'
+    return render(request, template_name=template, context=data)
 
 
 
@@ -285,17 +267,129 @@ def estatistica_jogo(request, pk):
 def iniciar_jogo(request,id_jogo):
     data = json.loads(request.body)
     atletas_ids = data.get('atletas', [])
+    print(atletas_ids)
+
 
     
     jogo = Jogos.objects.get(pk=id_jogo)
-    jogo.inicio_jogo = timezone.now()
-    jogo.save()
-    print("iniciou jogo com sucesso")
-    for atleta_id in atletas_ids:
+    if not jogo.segunda_parte:
+        jogo.inicio_jogo = timezone.now()
+        jogo.pausa = False
+        jogo.save()
+        print("primeira parte")
+    
+        for atleta_id in atletas_ids:
             atleta = EstatisticaJogo.objects.get(atleta__id=atleta_id, jogo=jogo)
-            print(atleta)
+            atleta.inicio = timezone.now()
+            atleta.em_campo = True
+            atleta.save()
+        
+        
+    else:
+        print("segunda parte")
+        jogo.inicio_segunda_parte = timezone.now()
+        jogo.pausa = False
+        jogo.save()
+        for atleta_id in atletas_ids:
+            atleta = EstatisticaJogo.objects.get(atleta__id=atleta_id, jogo=jogo)
             atleta.inicio = timezone.now()
             atleta.em_campo = True
             atleta.save()
     
+    
     return JsonResponse({'success': True ,'message': "Jogo iniciado com sucesso!"})
+
+
+
+
+def substituicao_jogo(request):
+    data = json.loads(request.body)
+    atleta_id = data.get('atleta')
+    jogo_id = data.get('jogo')
+
+    try:
+        jogo = Jogos.objects.get(pk=jogo_id)
+        estatistica = EstatisticaJogo.objects.get(atleta__id=atleta_id, jogo=jogo)
+    except (Jogos.DoesNotExist, EstatisticaJogo.DoesNotExist):
+        return JsonResponse({'error': 'Jogo ou atleta não encontrado'}, status=404)
+
+    if estatistica.em_campo:
+        if not jogo.pausa:
+            estatistica.fim = timezone.now()
+            estatistica.em_campo = False
+
+            if estatistica.inicio:
+                total_minutos = (estatistica.fim - estatistica.inicio).total_seconds() / 60
+                estatistica.total_minutos += total_minutos
+        
+            HistoricoSubstituição.objects.create(jogo=jogo, atleta=estatistica.atleta, entrou=estatistica.inicio, saiu=estatistica.fim, total_minutos=estatistica.total_minutos)
+            estatistica.inicio = None
+            estatistica.fim = None
+            estatistica.save()
+            return JsonResponse({'success': True,'status': 'saiu', 'total_minutos': estatistica.total_minutos})
+        return JsonResponse({'success': True,'status': 'Jogo em intervalo'})
+    else:
+        if not jogo.pausa:
+            estatistica.inicio = timezone.now()
+            estatistica.em_campo = True
+            estatistica.save()
+            return JsonResponse({'success': True,'status': 'entrou'})
+        else:
+            return JsonResponse({'success': True,'status': 'Jogo em intervalo'})
+    
+
+def intervalo_jogo(request,id_jogo):
+    data = json.loads(request.body)
+    atletas_ids = data.get('atletas', [])
+    try:
+        jogo = Jogos.objects.get(pk=id_jogo)
+        estatistica = EstatisticaJogo.objects.get(atleta__id=atleta_id, jogo=jogo)
+        jogo.inicio_jogo = None
+        jogo.pausa = True
+        jogo.save()
+        for atleta_id in atletas_ids:
+            atleta = EstatisticaJogo.objects.get(atleta__id=atleta_id, jogo=jogo)
+            atleta.fim = timezone.now()
+            atleta.em_campo = False
+            atleta.save()
+            if estatistica.inicio:
+                total_minutos = (estatistica.fim - estatistica.inicio).total_seconds() / 60
+                estatistica.total_minutos += total_minutos
+        
+            HistoricoSubstituição.objects.create(jogo=jogo, atleta=estatistica.atleta, entrou=estatistica.inicio, saiu=estatistica.fim, total_minutos=estatistica.total_minutos)
+            estatistica.inicio = None
+            estatistica.fim = None
+            estatistica.save()
+        return JsonResponse({'success': True ,'message': "Intervalo iniciado com sucesso!"})
+    except:
+        return JsonResponse({'success': False,'message': "Erro ao iniciar intervalo!"}, status=400)
+
+
+def finalizar_jogo(request,id_jogo):
+    try: 
+        jogo = Jogos.objects.get(pk=id_jogo)
+        jogo.fim_jogo = timezone.now()
+        jogo.save()
+        return JsonResponse({'success': True ,'message': "Jogo finalizado com sucesso!"})
+    except:
+        return JsonResponse({'success': False,'message': "Erro ao finalizar jogo!"}, status=400)
+    
+
+def golo(request, atleta_id, jogo_id):
+    try:
+        jogo = Jogos.objects.get(pk=jogo_id)
+        estatistica = EstatisticaJogo.objects.get(atleta__id=atleta_id, jogo=jogo)
+        estatistica.golos += 1
+        estatistica.save()
+        print(estatistica.atleta)
+        if estatistica.atleta.jogo.visitado == jogo.visitado:
+            jogo.visitado_golos += 1
+            jogo.save()
+            
+        else:
+            jogo.visitante_golos += 1
+            jogo.save()
+        return JsonResponse({'success': True ,'message': "Golo marcado com sucesso!"})
+    except Exception as e:
+        print("ERRO:", e)
+        return JsonResponse({'success': False,'message': "Erro ao marcar golo!"}, status=400)

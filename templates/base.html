@@ -46,14 +46,15 @@
         {% endblock %}
     </div>
 
-
+{% csrf_token %}
 
 </body>
 <script>
     window.urlAtletasList = "{% url 'atletas:atletas_list' %}";
     window.urlEncomendasList = "{% url 'equipamentos:encomendas_equipamentos_list' 'todos' %}";
     window.urlJogosList = "{% url 'jogos:games_list' %}";
-</script>
+    window.urlSubstituicaoJogo = "{% url 'jogos:substituicao_jogo' %}";
+    </script>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>

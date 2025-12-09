@@ -6,6 +6,7 @@ function resumoJogo(event, jogoId) {
         .then(response => response.text())
         .then(html => {
             document.getElementById("conteudo-dinamico").innerHTML = html;
+            iniciarTodosCronometros();
             history.pushState({ url: url }, "", url);
         })
         .catch(error => console.error("Erro na requisição:", error));
@@ -38,7 +39,7 @@ $(document).on('submit', '#form-new-game', function(event) {
         body: formData,
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
-    .then(response => response.json())  // ✅ converter para JSON
+    .then(response => response.json())  
     .then(data => {
         console.log("Resposta do servidor:", data);
 
@@ -55,7 +56,8 @@ $(document).on('submit', '#form-new-game', function(event) {
 
 $(document).on('submit', '#form-new-team', function (event) {
     event.preventDefault();
-    console.log("Form encomendas encontrado");  
+    console.log("Form encomendas encontrado");
+
 
     const formData = new FormData(this);
     var url = $(this).attr('data-url');
@@ -71,6 +73,7 @@ $(document).on('submit', '#form-new-team', function (event) {
             if (data.success) {
                 console.log("Resposta do servidor:", data);
                 carregarConteudo(urlJogosList);
+                
                 history.pushState({ url: urlJogosList }, "", urlJogosList);
             } else {
                 alert(data.message || 'Erro ao criar equipa.');
@@ -84,16 +87,49 @@ $(document).on('submit', '#form-new-team', function (event) {
 
 
 
-function alterarEmJogo(event, idAtleta){
+function alterarEmJogo(event, idAtleta, jogoId){
     event.preventDefault()
-    console.log(idAtleta)
+    console.log("Atleta:", idAtleta);
+    console.log("Jogo:", jogoId);
+    
+    fetch(window.urlSubstituicaoJogo,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({
+            'atleta': idAtleta,
+            'jogo': jogoId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Resposta do servidor:", data);
+            carregarConteudo('/jogos/estatistica_jogo/'+jogoId+'/');
+            iniciarTodosCronometros();
+            
+            history.pushState({ url: '/jogos/estatistica_jogo/'+jogoId + '/' }, "", '/jogos/estatistica_jogo/'+jogoId+'/');
+            document.getElementById('btn-inicio').classList.add('d-none');
+        } else {
+            alert(data.message || 'Erro ao iniciar jogo.');
+        }
+    })
+    .catch(error => console.error("Erro na requisição:", error));
+
+   
 }
 
 function iniciarJogo(event){
     event.preventDefault()
+    window.location.reload();
     
-    const idsMarcados = Array.from(document.querySelectorAll('input[name="jogadoresEmJogo"]:checked')).map(input => input.value);
-    const idJogo = document.querySelector('.atletasSelect')?.dataset.jogo;
+    const idsMarcados = Array.from(
+    document.querySelectorAll('input[name="jogadoresEmJogo"]:checked')).map(input => input.value);
+    const first = document.querySelector('.atletasSelect');
+    const idJogo = first ? first.dataset.jogo : null;
 
     const url = `/jogos/iniciar_jogo/${idJogo}`;
     fetch(url, { 
@@ -108,6 +144,7 @@ function iniciarJogo(event){
             if (data.success) {
                 console.log("Resposta do servidor:", data);
                 carregarConteudo('/jogos/estatistica_jogo/'+idJogo);
+                iniciarTodosCronometros();
                 
                 history.pushState({ url: window.urlJogosList }, "", window.urlJogosList);
                 document.getElementById('btn-inicio').classList.add('d-none');
@@ -122,39 +159,81 @@ function iniciarJogo(event){
 }
 
 
-function iniciarCronometro() {
-    const timerE1 = document.getElementById('game-timer');
-    if (!timerE1) {
-        console.warn("⏱️ Cronómetro não encontrado no DOM.");
-        return;
-    }
+function iniciarTodosCronometros() {
+    // Seleciona QUALQUER elemento com atributo data-inicio
+    const cronometros = document.querySelectorAll('[data-inicio]');
 
-    const inicioAttr = timerE1.dataset.inicio;
-    if (!inicioAttr) {
-        console.warn("⚠️ Sem data de início no cronómetro.");
-        return;
-    }
+    cronometros.forEach(el => {
+        const inicioAttr = el.dataset.inicio;
+        if (!inicioAttr) return;
 
-    const inicioJogo = new Date(inicioAttr);
-    console.log("🕒 Início do jogo:", inicioJogo);
+        const inicioTempo = new Date(inicioAttr);
 
-    // Intervalo com revalidação do elemento
-    setInterval(() => {
-        const timer = document.getElementById('game-timer'); // procurar novamente
-        if (!timer) return; // se o conteúdo for recarregado, evita erro
+        setInterval(() => {
+            const agora = new Date();
+            const diff = agora - inicioTempo;
 
-        const agora = new Date();
-        const diff = agora - inicioJogo;
-
-        if (diff > 0) {
-            const totalSegundos = Math.floor(diff / 1000);
-            const minutos = String(Math.floor(totalSegundos / 60)).padStart(2, '0');
-            const segundos = String(totalSegundos % 60).padStart(2, '0');
-            timer.textContent = `${minutos}:${segundos}`;
-        }
-    }, 1000);
+            if (diff > 0) {
+                const totalSegundos = Math.floor(diff / 1000);
+                const minutos = String(Math.floor(totalSegundos / 60)).padStart(2, '0');
+                const segundos = String(totalSegundos % 60).padStart(2, '0');
+                el.textContent = `${minutos}:${segundos}`;
+            }
+        }, 1000);
+    });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    iniciarCronometro();
-});
+document.addEventListener("DOMContentLoaded", iniciarTodosCronometros);
+
+
+function intervaloJogo(event,idJogo){
+    event.preventDefault()
+    fetch(`/jogos/intervalo_jogo/${idJogo}/`,{
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCSRFToken()
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Resposta do servidor:", data);
+            carregarConteudo('/jogos/estatistica_jogo/'+idJogo+'/');
+            iniciarTodosCronometros();
+            
+            history.pushState({ url: '/jogos/estatistica_jogo/'+idJogo + '/' }, "", '/jogos/estatistica_jogo/'+idJogo+'/');
+            document.getElementById('btn-inicio').classList.add('d-none');
+        } else {
+            alert(data.message || 'Erro ao iniciar jogo.');
+        }
+    })
+    .catch(error => console.error("Erro na requisição:", error));
+}
+
+function golo(idAtleta, idJogo){
+    console.log(idAtleta)
+    console.log(idJogo)
+
+    fetch(`/jogos/golo/${idAtleta}/${idJogo}/`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCSRFToken()
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Resposta do servidor:", data);
+            carregarConteudo('/jogos/estatistica_jogo/'+idJogo+'/');
+            iniciarTodosCronometros();
+            
+            history.pushState({ url: '/jogos/estatistica_jogo/'+idJogo + '/' }, "", '/jogos/estatistica_jogo/'+idJogo+'/');
+            document.getElementById('btn-inicio').classList.add('d-none');
+        } else {
+            alert(data.message || 'Erro ao iniciar jogo.');
+        }
+    })
+}

@@ -5,14 +5,12 @@
             <span class="material-symbols-outlined">play_circle</span>
         </button>
         <button type="button" class="btn btn-outline-secondary">
-            <span class="material-symbols-outlined">pause_circle</span>
+            <span class="material-symbols-outlined" onclick="intervaloJogo(event, '{{ jogo_id }}')">pause_circle</span>
         </button>
         <button type="button" class="btn btn-outline-secondary">
             <span class="material-symbols-outlined">stop_circle</span>
         </button>
-        <button type="button" class="btn btn-outline-secondary">
-            <span class="material-symbols-outlined">check_circle</span>
-        </button>
+        
     </div>
 
    
@@ -23,17 +21,19 @@
 
 
 <section class="p-4 d-flex flex-column align-items-center">
-    <h2 class="font-bold">{{jogo.equipa}}</h2>
+    <h2 class="font-bold"><span ondblclick="goloEquipa('{{jogo.id}}','{{jogo.visitado}}' )">{{jogo.visitado}} ({{jogo.golos_visitado}}) - </span> <span>{{jogo.visitante}} ({{jogo.golos_visitante}})</span></h2>
     <ul class="list-unstyled">
         {% for jogador in estatisticas %}
             <li class="d-flex align-items-center">
-                <input type="checkbox" class="form-check-input atletasSelect" onchange="alterarEmJogo(event,'{{jogador.id_atleta}}')" name="jogadoresEmJogo" value="{{jogador.id_atleta}}"  data-jogo="{{jogador.jogo.id}}" {% if jogador.em_campo %} checked {% endif %}></input>
-                <span class="ms-2" >{{jogador.atleta}}</span>
+                <input type="checkbox" data-jogo="{{jogador.jogo.id}}" value="{{jogador.atleta.id}}" class="form-check-input atletasSelect" onchange="alterarEmJogo(event,'{{jogador.atleta.id}}', '{{jogador.jogo.id}}')" name="jogadoresEmJogo"  {% if jogador.em_campo %} checked {% endif %}></input>
+                <span class="ms-2" ondblclick="golo('{{jogador.atleta.id}}', '{{jogo.id}}')" >{% with nome_parts=jogador.atleta.nome.split %}
+  {{ nome_parts.0 }} {{ nome_parts|last }}
+{% endwith %}</span>
                 <span class="ms-auto">{{jogador.golos}} golos</span>
-                <span class="ms-2 tempo-decorrido-jogo" data-inicio="{{jogador.inicio}}"></span>
-                <span class="ms-2">{{jogador.total_minutos}}</span></span>
+                <span class="ms-2 tempo-decorrido-jogo" data-inicio="{{jogador.inicio|date:'c'}}"></span>
+                <span class="ms-2">tempo: {{ jogador.tempo_formatado_total_minutos }}</span>
             </li>
         {% endfor %}
         
     </ul>
-</section>
+</section>  
