@@ -426,3 +426,8 @@ def golo_equipa(request, id_jogo, id_equipa):
     except Exception as e:
         print("ERRO:", e)
         return JsonResponse({'success': False, 'message': str(e)}, status=400)
+    
+
+def atletas_por_equipa(request, equipa_id):
+    atletas = Atleta.objects.filter(equipa_id=equipa_id).values('id', 'nome')
+    return JsonResponse(list(atletas), safe=False)

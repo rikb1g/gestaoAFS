@@ -1,4 +1,5 @@
 from django import forms
+from apps.atletas.models import Atleta
 from apps.jogos.models import Jogos, EstatisticaJogo, Equipas
 
 
@@ -14,6 +15,8 @@ class JogosForm(forms.ModelForm):
             'golos_visitado': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Golos visitado'}),
             'golos_visitante': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Golos visitante'}),
             'capitao': forms.Select(attrs={'class': 'form-control'}),
+            'titulares': forms.SelectMultiple(attrs={'class': 'form-control','size': 10}),
+            'suplentes': forms.SelectMultiple(attrs={'class': 'form-control','size': 10}),
         }
 
 
@@ -27,6 +30,10 @@ class EstatisticaJogoForm(forms.ModelForm):
             'golos': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Golos'}),
             'assistencias': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Assistencias'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['atleta'].queryset = Atleta.objects.none()
 
 class EquipasForm(forms.ModelForm):
     class Meta:

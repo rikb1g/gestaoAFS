@@ -303,3 +303,48 @@ function finalizarJogo(event,jogoId){
         }
     })
 }
+
+
+function initJogosForm() {
+    const visitado = document.getElementById("id_visitado");
+    const visitante = document.getElementById("id_visitante");
+    const titulares = document.getElementById("id_titulares");
+    const suplentes = document.getElementById("id_suplentes");
+    const capitao = document.getElementById("id_capitao");
+
+    if (!visitado || !visitante || !titulares || !suplentes) return;
+
+    function carregarAtletasSeForAVS(equipaSelect) {
+        const selectedOption = equipaSelect.options[equipaSelect.selectedIndex];
+        const equipaNome = selectedOption.text;
+        const equipaId = equipaSelect.value;
+
+        // Só carrega atletas se a equipa começar por "AVS"
+        if (!equipaNome || !equipaNome.startsWith("AVS")) {
+            titulares.innerHTML = "";
+            suplentes.innerHTML = "";
+            capitao.innerHTML = "";
+            return;
+        }
+
+        fetch(`/jogos/ajax/atletas-per-jogo/${equipaId}/`)
+            .then(response => response.json())
+            .then(data => {
+                titulares.innerHTML = "";
+                suplentes.innerHTML = "";
+                capitao.innerHTML = "";
+
+                data.forEach(atleta => {
+                    titulares.add(new Option(atleta.nome, atleta.id));
+                    suplentes.add(new Option(atleta.nome, atleta.id));
+                    capitao.add(new Option(atleta.nome, atleta.id));
+                });
+            });
+    }
+
+    visitado.addEventListener("change", () => carregarAtletasSeForAVS(visitado));
+    visitante.addEventListener("change", () => carregarAtletasSeForAVS(visitante));
+}
+
+document.addEventListener("DOMContentLoaded", initJogosForm);
+document.addEventListener("htmx:afterSwap", initJogosForm);
