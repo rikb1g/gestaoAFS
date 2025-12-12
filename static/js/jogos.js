@@ -188,8 +188,12 @@ document.addEventListener("DOMContentLoaded", iniciarTodosCronometros);
 
 function intervaloJogo(event,idJogo){
     event.preventDefault()
+    const idsMarcados = Array.from(
+        document.querySelectorAll('input[name="jogadoresEmJogo"]:checked')).map(input => input.value);
     fetch(`/jogos/intervalo_jogo/${idJogo}/`,{
         method: 'POST',
+        body: JSON.stringify({ 
+            'atletas': idsMarcados }),
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRFToken': getCSRFToken()
@@ -201,6 +205,7 @@ function intervaloJogo(event,idJogo){
             console.log("Resposta do servidor:", data);
             carregarConteudo('/jogos/estatistica_jogo/'+idJogo+'/');
             iniciarTodosCronometros();
+            window.location.reload();
             
             history.pushState({ url: '/jogos/estatistica_jogo/'+idJogo + '/' }, "", '/jogos/estatistica_jogo/'+idJogo+'/');
             document.getElementById('btn-inicio').classList.add('d-none');
@@ -229,11 +234,72 @@ function golo(idAtleta, idJogo){
             console.log("Resposta do servidor:", data);
             carregarConteudo('/jogos/estatistica_jogo/'+idJogo+'/');
             iniciarTodosCronometros();
+            window.location.reload();
             
             history.pushState({ url: '/jogos/estatistica_jogo/'+idJogo + '/' }, "", '/jogos/estatistica_jogo/'+idJogo+'/');
             document.getElementById('btn-inicio').classList.add('d-none');
         } else {
             alert(data.message || 'Erro ao iniciar jogo.');
+        }
+    })
+}
+
+function goloEquipa(idJogo, equipa){
+    console.log(idJogo)
+    console.log(equipa)
+
+    fetch(`/jogos/golo_equipa/${idJogo}/${(equipa)}/`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCSRFToken()
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Resposta do servidor:", data);
+            carregarConteudo('/jogos/estatistica_jogo/'+idJogo+'/');
+            iniciarTodosCronometros();
+            window.location.reload();
+            
+            history.pushState({ url: '/jogos/estatistica_jogo/'+idJogo + '/' }, "", '/jogos/estatistica_jogo/'+idJogo+'/');
+            document.getElementById('btn-inicio').classList.add('d-none');
+        } else {
+            alert(data.message || 'Erro ao marcar golo');
+        }
+    })
+}
+
+
+function finalizarJogo(event,jogoId){
+    event.preventDefault()
+    const idsMarcados = Array.from(
+        document.querySelectorAll('input[name="jogadoresEmJogo"]:checked')).map(input => input.value);
+
+    fetch(`/jogos/finalizar_jogo/${jogoId}/`,{
+        method: 'POST',
+        body: JSON.stringify({ 
+            'atletas': idsMarcados }),
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCSRFToken()
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Resposta do servidor:", data);
+            carregarConteudo(window.urlJogosList);
+            
+            
+            
+            history.pushState({ url: window.urlJogosList }, "", window.urlJogosList);
+            document.getElementById('btn-inicio').classList.add('d-none');
+        } else {
+            alert(data.message || 'Erro ao marcar golo');
         }
     })
 }

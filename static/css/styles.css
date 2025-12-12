@@ -42,6 +42,9 @@ a {
     font-size: 0.9rem;
     margin-top: 4px;
 }
+.pointer {
+    cursor: pointer;
+}
 .btn-add {
     display: flex;
     align-items: center;

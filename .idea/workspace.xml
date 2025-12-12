@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e33b5d8-9c38-43fa-a71c-d9cb44faa298" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/AFS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AFS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/estatisticas_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/estatisticas_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/jogos.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jogos.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,11 +71,11 @@
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\core\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\atletas\templates" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\static\images" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\atletas\templates\atletas" />
       <recent name="$PROJECT_DIR$/static/images" />
-      <recent name="$PROJECT_DIR$/apps" />
     </key>
   </component>
   <component name="RunManager" selected="Python.makemigrations">
@@ -81,7 +88,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (2)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -104,7 +110,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (2)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -127,7 +132,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (2)" />
       <option name="WORKING_DIRECTORY" value="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -222,7 +226,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-48aec45f0201-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.17011.127" />
+        <option value="bundled-python-sdk-f78a9d071105-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26574.90" />
       </set>
     </attachedChunks>
   </component>
@@ -236,6 +240,9 @@
       <updated>1750671271602</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
