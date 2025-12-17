@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6e33b5d8-9c38-43fa-a71c-d9cb44faa298" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/jogos.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jogos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/geral.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/geral.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

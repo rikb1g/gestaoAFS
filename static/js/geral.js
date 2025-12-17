@@ -28,6 +28,7 @@ function carregarConteudo(url) {
         .then(html => {
             document.getElementById("conteudo-dinamico").innerHTML = html;
             history.pushState({ url: url }, "", url); 
+            initJogosForm();
         })
         .catch(error => console.error("Erro na requisição:", error));
 }
@@ -85,6 +86,7 @@ $(document).on('click', '.btn-menu', function (e) {
             $('#conteudo-dinamico').html(data)
             window.history.pushState(null, null, url)
             setTimeout(iniciarCronometro, 50);
+            initJogosForm();
        
       })
              
@@ -99,9 +101,12 @@ $(document).on('click', '.link-ajax', function (e) {
             $('#conteudo-dinamico').html(data)
             window.history.pushState(null, null, url)
             setTimeout(iniciarCronometro, 50);
+            initJogosForm();
        
       })
              
+    initJogosForm();
+    iniciarTodosCronometros();
 });
 
 

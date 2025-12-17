@@ -1,3 +1,15 @@
+function getCSRFToken() {
+    // Acessa diretamente o cookie csrftoken
+    const csrfToken = document.cookie
+        .split(';')
+        .map(cookie => cookie.trim())
+        .find(cookie => cookie.startsWith('csrftoken='));
+
+    // Se encontrado, extrai o valor
+    return csrfToken ? csrfToken.split('=')[1] : null;
+}
+
+
 function menu() {
     const menu = document.getElementById('menu');
     menu.classList.toggle('show');
@@ -9,12 +21,14 @@ window.addEventListener('load', () => {
 });
 
 
+
 function carregarConteudo(url) {
     fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
         .then(response => response.text())
         .then(html => {
             document.getElementById("conteudo-dinamico").innerHTML = html;
             history.pushState({ url: url }, "", url); 
+            initJogosForm();
         })
         .catch(error => console.error("Erro na requisição:", error));
 }
@@ -71,6 +85,8 @@ $(document).on('click', '.btn-menu', function (e) {
       $.get(url, function (data) {
             $('#conteudo-dinamico').html(data)
             window.history.pushState(null, null, url)
+            setTimeout(iniciarCronometro, 50);
+            initJogosForm();
        
       })
              
@@ -84,9 +100,13 @@ $(document).on('click', '.link-ajax', function (e) {
       $.get(url, function (data) {
             $('#conteudo-dinamico').html(data)
             window.history.pushState(null, null, url)
+            setTimeout(iniciarCronometro, 50);
+            initJogosForm();
        
       })
              
+    initJogosForm();
+    iniciarTodosCronometros();
 });
 
 

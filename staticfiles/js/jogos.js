@@ -320,14 +320,12 @@ function initJogosForm() {
         const equipaId = equipaSelect.value;
 
         // Só carrega atletas se a equipa começar por "AVS"
-        if (!equipaNome || !equipaNome.startsWith("AVS")) {
+        if ( equipaNome.startsWith("AVS")) {
             titulares.innerHTML = "";
             suplentes.innerHTML = "";
             capitao.innerHTML = "";
-            return;
-        }
-
-        fetch(`/jogos/ajax/atletas-per-jogo/${equipaId}/`)
+            
+            fetch(`/jogos/ajax/atletas-per-jogo/${equipaId}/`)
             .then(response => response.json())
             .then(data => {
                 titulares.innerHTML = "";
@@ -340,6 +338,10 @@ function initJogosForm() {
                     capitao.add(new Option(atleta.nome, atleta.id));
                 });
             });
+            return
+        }
+
+        
     }
 
     visitado.addEventListener("change", () => carregarAtletasSeForAVS(visitado));

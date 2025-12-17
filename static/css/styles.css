@@ -97,11 +97,11 @@ a {
 table {
     border-collapse: separate; /* importante! */
     border-spacing: 0;         /* evita espaços extras */
-    border: 1px solid var(--table-border);
+    border: 1px solid var(--table-border)!important;
     border-radius: 15px;
     overflow: hidden;          /* corta cantos das células */
-    background-color: var(--table-bg);
-    color: var(--text-color);
+    background-color: var(--table-bg) !important;
+    color: var(--text-color) !important;
     transition: background-color 0.3s, color 0.3s;
     padding: 25px 10px;
     border-collapse: separate;
@@ -258,6 +258,11 @@ form button[type="submit"]:hover {
 @media (max-width: 768px) {
     form {
         padding: 15px;
+    }
+    .custom-table th,
+    .custom-table td {
+        padding: 8px 6px;
+        font-size: 0.9rem;
     }
 }
 
