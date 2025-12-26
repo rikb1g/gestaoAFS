@@ -15,6 +15,8 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     <script>
     const savedTheme = localStorage.getItem("theme");
     if(savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
@@ -56,13 +58,12 @@
     window.urlSubstituicaoJogo = "{% url 'jogos:substituicao_jogo' %}";
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
-<script src="{% static 'js/geral.js'%}?v=1.2"></script>
-<script src="{% static 'js/atletas.js' %}?v=1.2"></script>
-<script src="{% static 'js/equipamentos.js' %}?v=1.2"></script>
-<script src="{% static 'js/jogos.js'%}?v=1.2"></script>
+
+<script src="{% static 'js/geral.js'%}?v=2.0"></script>
+<script src="{% static 'js/atletas.js' %}?v=2.0"></script>
+<script src="{% static 'js/equipamentos.js' %}?v=2.0"></script>
+<script src="{% static 'js/jogos.js'%}?v=2.0"></script>
 
 
 </html>

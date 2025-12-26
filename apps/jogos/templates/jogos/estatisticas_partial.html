@@ -1,12 +1,24 @@
-<header class="p-4 d-flex flex-column align-items-center">
+<header class="p-4 d-flex flex-column align-items-center" data-module="jogos">
     <!-- Botões centralizados -->
     <div class="d-flex gap-2 mb-3 justify-content-center">
-        <button type="button" id="btn-inicio" onclick="iniciarJogo(event)" class="btn btn-outline-secondary">
+        {% if jogo.inicio %}
+        <button type="button"
+                id="btn-pause"
+                class="btn btn-outline-secondary"
+                data-action="intervalo-jogo"
+                data-jogo="{{ jogo_id }}">
+            <span class="material-symbols-outlined">pause_circle</span>
+        </button>
+        {% else %}
+
+        <button type="button" id="btn-inicio" data-action="inicar-jogo" data-jogo="{{ jogo_id }}" class="btn
+         btn-outline-secondary">
             <span class="material-symbols-outlined">play_circle</span>
         </button>
-        <button type="button" class="btn btn-outline-secondary">
-            <span class="material-symbols-outlined" onclick="intervaloJogo(event, '{{ jogo_id }}')">pause_circle</span>
-        </button>
+        {% endif %}
+
+
+
         
         
     </div>
@@ -18,13 +30,28 @@
 </header>
 
 
-<section class="p-4 d-flex flex-column align-items-center">
-    <h2 class="font-bold"><span class="pointer" ondblclick="goloEquipa('{{jogo.id}}','{{jogo.visitado.id}}' )">{{jogo.visitado}} ({{jogo.golos_visitado}}) - </span> <span class="pointer" ondblclick="goloEquipa('{{jogo.id}}','{{jogo.visitante.id}}' )">{{jogo.visitante}} ({{jogo.golos_visitante}})</span></h2>
+<section class="p-4 d-flex flex-column align-items-center" data-module="jogos">
+    <h2 class="font-bold"><span class="pointer"
+    data-action="goloEquipa"
+    data-jogo="{{jogo.id}}"
+    data-equipaid="{{jogo.visitado.id}}">{{jogo.visitado}} ({{jogo.golos_visitado}}) - </span>
+        <span class="pointer"
+              data-action="goloEquipa"
+              data-jogo="{{jogo.id}}"
+              data-equipaid="{{jogo.visitante.id}}">{{jogo.visitante}} ({{jogo.golos_visitante}})</span></h2>
     <ul class="list-unstyled">
         {% for jogador in estatisticas %}
             <li class="d-flex align-items-center">
-                <input type="checkbox" data-jogo="{{jogador.jogo.id}}" value="{{jogador.atleta.id}}" class="form-check-input atletasSelect" onchange="alterarEmJogo(event,'{{jogador.atleta.id}}', '{{jogador.jogo.id}}')" name="jogadoresEmJogo"  {% if jogador.em_campo %} checked {% endif %}></input>
-                <span class="ms-2 pointer" ondblclick="golo('{{jogador.atleta.id}}', '{{jogo.id}}')" >{% with nome_parts=jogador.atleta.nome.split %}
+                <input type="checkbox" data-jogo="{{jogador.jogo.id}}" value="{{jogador.atleta.id}}" class="form-check-input atletasSelect"
+                       data-action="alterarEmJogo"
+                       data-jogo="{{jogador.jogo.id}}"
+                       data-atleta="{{jogador.atleta.id}}"
+                       name="jogadoresEmJogo"  {% if jogador.em_campo %} checked {% endif %}></input>
+                <span class="ms-2 pointer"
+                      data-action="golo"
+                      data-jogo="{{jogo.id}}"
+                      data-atleta="{{jogador.atleta.id}}"
+                       >{% with nome_parts=jogador.atleta.nome.split %}
   {{ nome_parts.0 }} {{ nome_parts|last }}
 {% endwith %}</span>
                 <span class="ms-auto">{{jogador.golos}} golos</span>

@@ -5,10 +5,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e33b5d8-9c38-43fa-a71c-d9cb44faa298" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/AFS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AFS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0002_atleta_jogos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0003_remove_atleta_jogos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0004_atleta_nome_camisola.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0005_atleta_equipa.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/templates/atletas/atleta_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/templates/atletas/atleta_form_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/templates/atletas/atletas_list_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/templates/atletas/atletas_list_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/templates/atletas/datail_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/templates/atletas/datail_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0002_equipamentos_data_entrega_encomendaequipamentos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0003_rename_atleta_encomendaequipamentos_atleta_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0004_remove_encomendaequipamentos_equipamento_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0005_remove_encomendaequipamentos_equipamento_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0006_encomenda_encomendaitem_delete_encomendaequipamentos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0007_alter_encomendaitem_encomenda.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0008_remove_encomendaitem_equipamento_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0009_remove_encomendaitem_equipamento_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0002_equipas_rename_local_jogos_adversario_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0003_remove_jogos_adversario_remove_jogos_casa_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0004_jogos_jornada_estatisticajogo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0005_equipas_atleta.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0006_remove_equipas_atleta_equipas_atleta.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0007_alter_equipas_atleta.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0008_remove_equipas_atleta_alter_jogos_suplentes_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0009_alter_jogos_suplentes_alter_jogos_titulares.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0010_estatisticajogo_fim_estatisticajogo_inicio_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0011_alter_estatisticajogo_fim_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0012_jogos_fim_jogo_jogos_inicio_jogo_jogos_segunda_parte.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0013_estatisticajogo_em_campo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0014_historicosubstituição.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0015_jogos_fim_primeira_parte_jogos_inicio_segunda_parte.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0016_jogos_pausa.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0017_remove_jogos_fim_primeira_parte_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/equipa_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/equipa_form_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/estatisticas_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/estatisticas_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_form_partial.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/geral.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/geral.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/jogos.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jogos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,19 +60,35 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;rikb1g&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/rikb1g/gestaoAFS.git&quot;,
+    &quot;accountId&quot;: &quot;ed161e8b-79af-4162-a985-9b0f907bd28c&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2yu4l1KC14vkj35cXJCB9PJl2VS" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -52,18 +110,32 @@
     &quot;Python.makemigrations.executor&quot;: &quot;Run&quot;,
     &quot;Python.migrate.executor&quot;: &quot;Run&quot;,
     &quot;Python.runserver.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
     &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ricso/OneDrive/Documentos/Django/gestorPausas&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/r/PycharmProjects/gestaoAFS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\core\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -74,7 +146,7 @@
       <recent name="$PROJECT_DIR$/static/images" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.makemigrations">
+  <component name="RunManager" selected="Python.migrate">
     <configuration name="makemigrations" type="PythonConfigurationType" factoryName="Python">
       <module name="AFS" />
       <option name="ENV_FILES" value="" />
@@ -84,10 +156,13 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.14 (PyCharmMiscProject)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
       <option name="PARAMETERS" value="makemigrations" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -106,10 +181,13 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.14 (PyCharmMiscProject)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
       <option name="PARAMETERS" value="migrate" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -128,10 +206,13 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.14 (PyCharmMiscProject)" />
       <option name="WORKING_DIRECTORY" value="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
       <option name="PARAMETERS" value="runserver" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -151,6 +232,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;tests.AtletasTest&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
@@ -166,6 +249,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;tests.AtletasTest.test_delete_atleta&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
@@ -181,6 +266,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;tests.EquipamentosTest&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
@@ -196,6 +283,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;tests.EquipamentosTest.test_encomenda_kit_jogador&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
@@ -222,7 +311,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-f78a9d071105-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26574.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.29346.142" />
+        <option value="bundled-python-sdk-f2b7a9f6281b-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.142" />
       </set>
     </attachedChunks>
   </component>
@@ -234,8 +324,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1750671271602</updated>
+      <workItem from="1766488829790" duration="2227000" />
+      <workItem from="1766503601948" duration="442000" />
+      <workItem from="1766504064194" duration="40648000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
@@ -250,5 +346,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/gestaoAFS$migrate.coverage" NAME="migrate Coverage Results" MODIFIED="1766489670452" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

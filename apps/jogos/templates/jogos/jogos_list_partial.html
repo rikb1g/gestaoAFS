@@ -1,8 +1,8 @@
 {% load static%}
 
-<div class="d-flex">
+<div class="d-flex" >
     <div class="div">
-        <a href="{% url 'jogos:new_game'  %}" hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax">Novo
+        <a href="{% url 'jogos:new_game'  %}" hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax" data-action="novo-jogo">Novo
             Jogo</a>
     </div>
 
@@ -11,7 +11,7 @@
 
 
 
-<div class="container">
+<div class="container" data-module="jogos">
     <p class="text-center fs-1">Jogos</p>
 
     <div class="table-responsive">
@@ -39,14 +39,20 @@
                                 edit
                             </span></a>
 
-                        <button type="button" class="btn-remove btn-operacoes" onclick="resumoJogo(event, '{{ jogo.pk }}')"><span
+                        <button type="button" class="btn-remove btn-operacoes"
+                                data-action="resumoJogo"
+                                data-jogoid="{{ jogo.pk }}"
+                                ><span
                                 class="material-symbols-outlined btn-operacoes">
                                 timer_play
                             </span></button>
                         <button type="button" class="btn-remove btn-operacoes"><span class="material-symbols-outlined btn-operacoes">
                                 sports_and_outdoors
                             </span></button>
-                        <button type="button" class="btn-remove btn-operacoes"  onclick="eliminarJogo(event, '{{ jogo.pk }}')"><span class="material-symbols-outlined btn-operacoes">
+                        <button type="button" class="btn-remove btn-operacoes"
+                                data-action="eliminarJogo"
+                                data-jogoid="{{ jogo.pk }}"
+                                ><span class="material-symbols-outlined btn-operacoes">
                                 delete
                             </span></button>
 
@@ -54,8 +60,6 @@
                 </tr>
                 {% endfor %}
             </tbody>
-
-
-
-
-    </div>
+        </table>
+     </div>
+</div>
