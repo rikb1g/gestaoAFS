@@ -5,52 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e33b5d8-9c38-43fa-a71c-d9cb44faa298" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/AFS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AFS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/atletas/migrations/0002_atleta_jogos.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/atletas/migrations/0003_remove_atleta_jogos.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/atletas/migrations/0004_atleta_nome_camisola.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0002_equipamentos_data_entrega_encomendaequipamentos.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0003_rename_atleta_encomendaequipamentos_atleta_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0004_remove_encomendaequipamentos_equipamento_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0005_remove_encomendaequipamentos_equipamento_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0006_encomenda_encomendaitem_delete_encomendaequipamentos.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0007_alter_encomendaitem_encomenda.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0008_remove_encomendaitem_equipamento_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0009_remove_encomendaitem_equipamento_and_more.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0002_atleta_jogos.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0003_remove_atleta_jogos.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0004_atleta_nome_camisola.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0005_atleta_equipa.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/templates/atletas/atleta_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/templates/atletas/atleta_form_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/templates/atletas/atletas_list_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/templates/atletas/atletas_list_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/templates/atletas/datail_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/templates/atletas/datail_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0002_equipamentos_data_entrega_encomendaequipamentos.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0003_rename_atleta_encomendaequipamentos_atleta_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0004_remove_encomendaequipamentos_equipamento_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0005_remove_encomendaequipamentos_equipamento_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0006_encomenda_encomendaitem_delete_encomendaequipamentos.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0007_alter_encomendaitem_encomenda.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0008_remove_encomendaitem_equipamento_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0009_remove_encomendaitem_equipamento_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0002_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/migrations/0005_atleta_equipa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0002_equipas_rename_local_jogos_adversario_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0003_remove_jogos_adversario_remove_jogos_casa_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0004_jogos_jornada_estatisticajogo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0005_equipas_atleta.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0006_remove_equipas_atleta_equipas_atleta.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0007_alter_equipas_atleta.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0008_remove_equipas_atleta_alter_jogos_suplentes_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0009_alter_jogos_suplentes_alter_jogos_titulares.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0010_estatisticajogo_fim_estatisticajogo_inicio_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0011_alter_estatisticajogo_fim_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0012_jogos_fim_jogo_jogos_inicio_jogo_jogos_segunda_parte.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0013_estatisticajogo_em_campo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0014_historicosubstituição.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0015_jogos_fim_primeira_parte_jogos_inicio_segunda_parte.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0016_jogos_pausa.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0017_remove_jogos_fim_primeira_parte_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/equipa_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/equipa_form_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/estatisticas_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/estatisticas_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_form_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/geral.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/geral.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/jogos.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jogos.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,55 +65,57 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python tests.Python tests for tests.AtletasTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.AtletasTest.test_criar_atleta.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.AtletasTest.test_delete_atleta.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.test_create_equipamento.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_guarda_redes.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_jogador.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in tests.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python.makemigrations.executor&quot;: &quot;Run&quot;,
-    &quot;Python.migrate.executor&quot;: &quot;Run&quot;,
-    &quot;Python.runserver.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/r/PycharmProjects/gestaoAFS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python tests.Python tests for tests.AtletasTest.executor": "Run",
+    "Python tests.Python tests for tests.AtletasTest.test_criar_atleta.executor": "Run",
+    "Python tests.Python tests for tests.AtletasTest.test_delete_atleta.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.test_create_equipamento.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_guarda_redes.executor": "Run",
+    "Python tests.Python tests for tests.EquipamentosTest.test_encomenda_kit_jogador.executor": "Run",
+    "Python tests.Python tests in tests.py.executor": "Run",
+    "Python.makemigrations.executor": "Run",
+    "Python.migrate.executor": "Run",
+    "Python.runserver.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ai.playground.ignore.import.keys.banner.in.settings": "true",
+    "com.codeium.enabled": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/r/PycharmProjects/gestaoAFS/apps/jogos/migrations",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.sync",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/jogos/migrations" />
+      <recent name="$PROJECT_DIR$/apps/atletas/migrations" />
       <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\core\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/equipamentos/migrations" />
       <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\atletas\templates" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\static\images" />
       <recent name="C:\Users\ricso\OneDrive\Área de Trabalho\Django\gestaoAFS\apps\atletas\templates\atletas" />
-      <recent name="$PROJECT_DIR$/static/images" />
     </key>
   </component>
   <component name="RunManager" selected="Python.migrate">
@@ -326,7 +298,7 @@
       <updated>1750671271602</updated>
       <workItem from="1766488829790" duration="2227000" />
       <workItem from="1766503601948" duration="442000" />
-      <workItem from="1766504064194" duration="40648000" />
+      <workItem from="1766504064194" duration="43591000" />
     </task>
     <servers />
   </component>
