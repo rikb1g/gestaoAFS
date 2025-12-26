@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e33b5d8-9c38-43fa-a71c-d9cb44faa298" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/atletas/migrations/0002_atleta_jogos.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/atletas/migrations/0003_remove_atleta_jogos.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/atletas/migrations/0004_atleta_nome_camisola.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0002_equipamentos_data_entrega_encomendaequipamentos.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0003_rename_atleta_encomendaequipamentos_atleta_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0004_remove_encomendaequipamentos_equipamento_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0005_remove_encomendaequipamentos_equipamento_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0006_encomenda_encomendaitem_delete_encomendaequipamentos.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0007_alter_encomendaitem_encomenda.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0008_remove_encomendaitem_equipamento_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0009_remove_encomendaitem_equipamento_and_more.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/atletas/migrations/0002_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/atletas/migrations/0005_atleta_equipa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/equipamentos/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/equipamentos/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jogos/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/equipa_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/equipa_form_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_form_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_form_partial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jogos/templates/jogos/jogos_list_partial.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -298,7 +287,7 @@
       <updated>1750671271602</updated>
       <workItem from="1766488829790" duration="2227000" />
       <workItem from="1766503601948" duration="442000" />
-      <workItem from="1766504064194" duration="43591000" />
+      <workItem from="1766504064194" duration="45129000" />
     </task>
     <servers />
   </component>

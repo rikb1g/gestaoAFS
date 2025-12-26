@@ -33,6 +33,9 @@ class Jogos(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return reverse('jogos:games_list', )
+
 
     def __str__(self):
         return f"{self.jornada} - {self.visitado} vs {self.visitante}" 
@@ -49,6 +52,9 @@ class EstatisticaJogo(models.Model):
     em_campo = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse('jogos:games_list', )
 
     @property
     def tempo_formatado_total_minutos(self):

@@ -1,18 +1,23 @@
 {% load static%}
 
-<div class="d-flex" >
-    <div class="div">
-        <a href="{% url 'jogos:new_game'  %}" hx-target="#conteudo-dinamico" hx-push-url="true" class="link-ajax" data-action="novo-jogo">Novo
-            Jogo</a>
-    </div>
-
-
-</div>
-
 
 
 <div class="container" data-module="jogos">
-    <p class="text-center fs-1">Jogos</p>
+
+
+    <div class="header">
+        <h1 class="titulo">Lista de Jogos</h1>
+        <a href="{% url 'jogos:new_game'  %}" hx-target="#conteudo-dinamico"
+           hx-push-url="true" class="btn-add link-ajax" data-action="novo-jogo">
+            <span class="material-symbols-outlined">add</span>
+            Novo Jogo</a>
+
+
+    </div>
+
+
+
+
 
     <div class="table-responsive">
         <table class="table-atletas">
