@@ -1,0 +1,81 @@
+from rest_framework import serializers
+from apps.jogos.models import Jogos, EstatisticaJogo
+from apps.atletas.models import Atleta
+
+
+class JogosEstadoSeralizer(serializers.ModelSerializer):
+    visitado = serializers.StringRelatedField()
+    visitante = serializers.StringRelatedField()
+    class Meta:
+        model = Jogos
+        fields = (
+            'id',
+            'inicio_jogo',
+            'golos_visitado',
+            'golos_visitante',
+            'visitado',
+            'visitante',
+        )
+
+class JogadorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Atleta
+        fields = (
+            'id',
+            'nome',
+        )
+
+
+class JogadoresEmCampoSerializer(serializers.ModelSerializer):
+    titulares = JogadorSerializer(many=True)
+    suplentes = JogadorSerializer(many=True)
+    capitao = JogadorSerializer(many=False)
+
+    class Meta:
+        model = Jogos
+        fields = 'titulares', 'suplentes','capitao'
+
+    
+class EstatisticaJogoSerializer(serializers.ModelSerializer):
+    atleta = JogadorSerializer(many=False)
+    jogo = JogosEstadoSeralizer(many=False)
+
+    class Meta:
+        model = EstatisticaJogo
+        fields = (
+            'jogo', 
+            'atleta', 
+            'golos', 
+            'assistencias', 
+            'inicio', 
+            'fim',
+            'total_minutos',
+            'em_campo',
+        )
+
+
+class SubstituicaoRequestSerializer(serializers.Serializer):
+    jogo = serializers.IntegerField()
+    atleta = serializers.IntegerField()
+class SubstituicaoResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField()
+    status = serializers.CharField()
+    total_minutos = serializers.FloatField(required=False)
+
+
+class GoloRequestSerializer(serializers.Serializer):
+    atleta = serializers.IntegerField()
+    jogo = serializers.IntegerField()
+
+class GoloResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField()
+    status = serializers.CharField()
+
+
+class GoloEquipaRequestSerializer(serializers.Serializer):
+    jogo = serializers.IntegerField()
+    equipa = serializers.IntegerField()
+
+class GoloEquipaResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField()
+    status = serializers.CharField()

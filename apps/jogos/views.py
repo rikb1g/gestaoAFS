@@ -7,7 +7,6 @@ from django.template.loader import render_to_string
 from apps.jogos.models import Jogos, Equipas, EstatisticaJogo, HistoricoSubstituição
 from apps.jogos.forms import JogosForm, EquipasForm
 from apps.atletas.models import Atleta
-from urllib.parse import unquote
 
 
 class JogosListView(ListView):

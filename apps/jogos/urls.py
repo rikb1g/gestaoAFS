@@ -19,6 +19,7 @@ urlpatterns = [
     path('golo/<int:atleta_id>/<int:jogo_id>/', views.golo, name='golo'),
     path('golo_equipa/<int:id_jogo>/<int:id_equipa>/', views.golo_equipa, name='golo_equipa'),
     path('ajax/atletas-per-jogo/<int:equipa_id>/', views.atletas_por_equipa, name='atletas_por_equipa'),
+    
 ]
 
 
