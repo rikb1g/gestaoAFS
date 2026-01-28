@@ -10,5 +10,9 @@ urlpatterns = [
     path('subsituicao_jogo/', views.substituicao_jogo, name='api_substituicao_jogo'),
     path('marcar_golo_atleta/', views.marcar_golo, name='api_marcar_golo'),
     path('golo_equipa/', views.golo_equipa, name='api_golo_equipa'),
+    path('iniciar_jogo/', views.iniciar_jogo, name='api_intervalo_jogo'),
+    path('intervalo_jogo/', views.intervalo_jogo, name='api_intervalo_jogo'),
+    path('finalizar_jogo/', views.finalizar_jogo, name='api_finalizar_jogo'),
+    path('lista_jogos/', views.lista_jogos, name='api_lista_jogos'),
 
 ]

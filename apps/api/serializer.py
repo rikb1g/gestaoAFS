@@ -61,6 +61,7 @@ class SubstituicaoResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField()
     status = serializers.CharField()
     total_minutos = serializers.FloatField(required=False)
+    inicio = serializers.DateTimeField(required=False)
 
 
 class GoloRequestSerializer(serializers.Serializer):
@@ -79,3 +80,29 @@ class GoloEquipaRequestSerializer(serializers.Serializer):
 class GoloEquipaResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField()
     status = serializers.CharField()
+
+
+#iniciar jogos
+class IniciarJogoRequestSerializer(serializers.Serializer):
+    jogo = serializers.IntegerField()
+    atletas = serializers.ListField(child=serializers.IntegerField())
+
+class IniciarJogoResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField()
+    status = serializers.CharField()
+
+
+class ListaJogosSerializer(serializers.Serializer):
+    jogos = JogosEstadoSeralizer(many=True)
+    class Meta:
+        model = Jogos
+        fields = (
+            'id',
+            'visitado',
+            'visitante',
+            'golos_visitado',
+            'golos_visitante',
+            'jornada',
+            'data',
+        )
+
