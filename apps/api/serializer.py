@@ -6,6 +6,10 @@ from apps.atletas.models import Atleta
 class JogosEstadoSeralizer(serializers.ModelSerializer):
     visitado = serializers.StringRelatedField()
     visitante = serializers.StringRelatedField()
+
+    visitado_id = serializers.SerializerMethodField()
+    visitante_id = serializers.SerializerMethodField()
+
     class Meta:
         model = Jogos
         fields = (
@@ -15,6 +19,8 @@ class JogosEstadoSeralizer(serializers.ModelSerializer):
             'golos_visitante',
             'visitado',
             'visitante',
+            'visitado_id',
+            'visitante_id',
         )
 
 class JogadorSerializer(serializers.ModelSerializer):
