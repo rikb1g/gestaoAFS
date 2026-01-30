@@ -127,20 +127,20 @@ def marcar_golo(request):
         jogo.golos_visitante += 1
         jogo.save()
 
-    return Response(serializer.GoloResponseSerializer({
-        "success": True,
-        "message": "Golo marcado com sucesso!",
-        "jogador": {
-            "id": atleta.id,
-            "golos":estatisticas.golos,
-            'assistencias': estatisticas.assistencias
-        }, 
-        'jogo': {
-            id: jogo.id,
-            'golos_visitado': jogo.golos_visitado,
-            'golos_visitante': jogo.golos_visitante
-        }   
-    }).data)
+    return Response({
+    "success": True,
+    "message": "Golo marcado com sucesso!",
+    "jogador": {
+        "id": atleta.id,
+        "golos": estatisticas.golos,
+        "assistencias": estatisticas.assistencias
+    },
+    "jogo": {
+        "id": jogo.id,
+        "golosVisitado": jogo.golos_visitado,
+        "golosVisitante": jogo.golos_visitante
+    }
+})
 
 # golo equipa
 @api_view(['POST'])
