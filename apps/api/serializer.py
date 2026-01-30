@@ -63,15 +63,34 @@ class SubstituicaoResponseSerializer(serializers.Serializer):
     total_minutos = serializers.FloatField(required=False)
     inicio = serializers.DateTimeField(required=False)
 
+#serializer para marcar golos
+#jogador
+class JogadorGoloSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    golos = serializers.IntegerField()
+    assistencias = serializers.IntegerField()
+
+#jogo
+class JogoGoloSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    golos_visitado = serializers.IntegerField()
+    golos_visitante = serializers.IntegerField()
+
+
+#serializer para marcar golos
+class GoloResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField()
+    message = serializers.CharField()
+    jogador = JogadorGoloSerializer()
+    jogo = JogoGoloSerializer()
+
 
 class GoloRequestSerializer(serializers.Serializer):
     atleta = serializers.IntegerField()
     jogo = serializers.IntegerField()
 
-class GoloResponseSerializer(serializers.Serializer):
-    success = serializers.BooleanField()
-    status = serializers.CharField()
 
+# golo equipa
 
 class GoloEquipaRequestSerializer(serializers.Serializer):
     jogo = serializers.IntegerField()
@@ -80,9 +99,15 @@ class GoloEquipaRequestSerializer(serializers.Serializer):
 class GoloEquipaResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField()
     status = serializers.CharField()
+    jogo = JogoGoloSerializer()
 
 
 #iniciar jogos
+class InicioJogoSerializer(serializers.Serializer):
+    id= serializers.IntegerField()
+    visitado = serializers.StringRelatedField()
+    visitante = serializers.StringRelatedField()
+    inicio = serializers.DateTimeField()
 class IniciarJogoRequestSerializer(serializers.Serializer):
     jogo = serializers.IntegerField()
     atletas = serializers.ListField(child=serializers.IntegerField())
@@ -90,7 +115,7 @@ class IniciarJogoRequestSerializer(serializers.Serializer):
 class IniciarJogoResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField()
     status = serializers.CharField()
-
+    jogo = InicioJogoSerializer()
 
 class ListaJogosSerializer(serializers.Serializer):
     jogos = JogosEstadoSeralizer(many=True)

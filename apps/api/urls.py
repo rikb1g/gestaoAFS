@@ -14,5 +14,7 @@ urlpatterns = [
     path('intervalo_jogo/', views.intervalo_jogo, name='api_intervalo_jogo'),
     path('finalizar_jogo/', views.finalizar_jogo, name='api_finalizar_jogo'),
     path('lista_jogos/', views.lista_jogos, name='api_lista_jogos'),
-
+    path('anular_golo_jogador/', views.anular_golo_jogador, name='api_anular_golo_jogador'),
+    path('atribuir_assitencia/', views.atribuir_assistencia, name='api_atribuir_assistencia'),
+    path('anular_assistencia/', views.anular_assistencia, name='api_anular_assistencia'),
 ]

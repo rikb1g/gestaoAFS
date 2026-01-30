@@ -102,7 +102,6 @@ def substituicao_jogo(request):
                 'inicio': estatistica.inicio,
             }).data)
         
-    
 @api_view(['POST'])
 def marcar_golo(request):
     serializer_ = serializer.GoloRequestSerializer(data=request.data)
@@ -127,7 +126,7 @@ def marcar_golo(request):
         jogo.golos_visitante += 1
         jogo.save()
 
-    return Response({
+    response_serializer= serializer.GoloResponseSerializer({
     "success": True,
     "message": "Golo marcado com sucesso!",
     "jogador": {
@@ -140,8 +139,48 @@ def marcar_golo(request):
         "golosVisitado": jogo.golos_visitado,
         "golosVisitante": jogo.golos_visitante
     }
-})
+        })
 
+    return Response(response_serializer.data)
+
+@api_view(['POST'])
+def anular_golo_jogador(request):
+    serializer_ = serializer.GoloRequestSerializer(data=request.data)
+    serializer_.is_valid(raise_exception=True)
+
+    jogo_id = serializer_.validated_data['jogo']
+    atleta_id = serializer_.validated_data['atleta']
+
+    #buscar os objetos
+    jogo = get_object_or_404(Jogos, pk=jogo_id)
+    atleta = get_object_or_404(Atleta, pk=atleta_id)
+    
+    estatisticas = EstatisticaJogo.objects.get(atleta=atleta, jogo=jogo)
+
+    estatisticas.golos -= 1
+    estatisticas.save()
+
+    if atleta.equipa == jogo.visitado:
+        jogo.golos_visitado -= 1
+        jogo.save()
+    else:
+        jogo.golos_visitante -= 1
+        jogo.save()
+
+    return Response(serializer.GoloResponseSerializer({
+        "success": True,
+        "message": "Golo anulado com sucesso!",
+        "jogador": {
+            "id": atleta.id,
+            "golos": estatisticas.golos,
+            "assistencias": estatisticas.assistencias
+        },
+        "jogo": {
+            "id": jogo.id,
+            "golosVisitado": jogo.golos_visitado,
+            "golosVisitante": jogo.golos_visitante
+        }
+        }).data)
 # golo equipa
 @api_view(['POST'])
 def golo_equipa(request):
@@ -175,6 +214,61 @@ def golo_equipa(request):
         }
     }).data)
 
+
+## Assistencias
+@api_view(['POST'])
+def atribuir_assistencia(request):
+    serializer_ = serializer.GoloRequestSerializer(data=request.data)
+    serializer_.is_valid(raise_exception=True)
+
+    jogo_id = serializer_.validated_data['jogo']
+    atleta_id = serializer_.validated_data['atleta']
+
+    #buscar os objetos
+    jogo = get_object_or_404(Jogos, pk=jogo_id)
+    atleta = get_object_or_404(Atleta, pk=atleta_id)
+    
+    estatisticas = EstatisticaJogo.objects.get(atleta=atleta, jogo=jogo)
+
+    estatisticas.assistencias += 1
+    estatisticas.save()
+
+    return Response(serializer.GoloResponseSerializer({
+        "success": True,
+        "message": "Assistencia atribuida com sucesso!",
+        "jogador": {
+            "id": atleta.id,
+            "golos": estatisticas.golos,
+            "assistencias": estatisticas.assistencias
+        }
+        }).data)
+
+@api_view(['POST'])
+def anular_assistencia(request):
+    serializer_ = serializer.GoloRequestSerializer(data=request.data)
+    serializer_.is_valid(raise_exception=True)
+
+    jogo_id = serializer_.validated_data['jogo']
+    atleta_id = serializer_.validated_data['atleta']
+
+    #buscar os objetos
+    jogo = get_object_or_404(Jogos, pk=jogo_id)
+    atleta = get_object_or_404(Atleta, pk=atleta_id)
+    
+    estatisticas = EstatisticaJogo.objects.get(atleta=atleta, jogo=jogo)
+
+    estatisticas.assistencias -= 1
+    estatisticas.save()
+
+    return Response(serializer.GoloResponseSerializer({
+        "success": True,
+        "message": "Assistencia anulada com sucesso!",
+        "jogador": {
+            "id": atleta.id,
+            "golos": estatisticas.golos,
+            "assistencias": estatisticas.assistencias
+        }
+        }).data)
 
 @api_view(['POST'])
 def iniciar_jogo(request):
