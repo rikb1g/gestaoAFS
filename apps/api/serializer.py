@@ -22,6 +22,11 @@ class JogosEstadoSeralizer(serializers.ModelSerializer):
             'visitado_id',
             'visitante_id',
         )
+    def get_visitado_id(self, obj):
+        return obj.visitado.id
+
+    def get_visitante_id(self, obj):
+        return obj.visitante.id
 
 class JogadorSerializer(serializers.ModelSerializer):
     class Meta:
