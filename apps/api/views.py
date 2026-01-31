@@ -104,68 +104,70 @@ def substituicao_jogo(request):
         
 @api_view(['POST'])
 def marcar_golo(request):
-    serializer_ = serializer.GoloRequestSerializer(data=request.data)
-    serializer_.is_valid(raise_exception=True)
+    """
+    Marca um golo para um atleta e atualiza o placar do jogo.
+    Retorna JSON com os dados do jogador e do jogo atualizados.
+    """
+    # Valida o request
+    golo_request = serializer.GoloRequestSerializer(data=request.data)
+    golo_request.is_valid(raise_exception=True)
 
-    jogo_id = serializer_.validated_data['jogo']
-    atleta_id = serializer_.validated_data['atleta']
+    jogo_id = golo_request.validated_data['jogo']
+    atleta_id = golo_request.validated_data['atleta']
 
-    #buscar os objetos
+    # Busca objetos no DB
     jogo = get_object_or_404(Jogos, pk=jogo_id)
     atleta = get_object_or_404(Atleta, pk=atleta_id)
-    
-    estatisticas = EstatisticaJogo.objects.get(atleta=atleta, jogo=jogo)
+    estatisticas = get_object_or_404(EstatisticaJogo, atleta=atleta, jogo=jogo)
 
+    # Atualiza estatísticas do jogador
     estatisticas.golos += 1
     estatisticas.save()
 
+    # Atualiza o placar do jogo
     if atleta.equipa == jogo.visitado:
         jogo.golos_visitado += 1
-        jogo.save()
     else:
         jogo.golos_visitante += 1
-        jogo.save()
+    jogo.save()
 
-    response_serializer= serializer.GoloResponseSerializer({
-    "success": True,
-    "message": "Golo marcado com sucesso!",
-    "jogador": {
-        "id": atleta.id,
-        "golos": estatisticas.golos,
-        "assistencias": estatisticas.assistencias
-    },
-    "jogo": {
-        "id": jogo.id,
-        "golosVisitado": jogo.golos_visitado,
-        "golosVisitante": jogo.golos_visitante
+    # Prepara os dados para o serializer de resposta
+    response_data = {
+        "success": True,
+        "message": "Golo marcado com sucesso!",
+        "jogador": {
+            "id": atleta.id,
+            "golos": estatisticas.golos,
+            "assistencias": estatisticas.assistencias
+        },
+        "jogo": {
+            "id": jogo.id,
+            "golos_visitado": jogo.golos_visitado,
+            "golos_visitante": jogo.golos_visitante
+        }
     }
-        })
 
+    # Serializa e retorna
+    response_serializer = serializer.GoloResponseSerializer(response_data)
     return Response(response_serializer.data)
 
 @api_view(['POST'])
 def anular_golo_jogador(request):
-    serializer_ = serializer.GoloRequestSerializer(data=request.data)
-    serializer_.is_valid(raise_exception=True)
+    s = serializer.GoloRequestSerializer(data=request.data)
+    s.is_valid(raise_exception=True)
 
-    jogo_id = serializer_.validated_data['jogo']
-    atleta_id = serializer_.validated_data['atleta']
+    jogo = get_object_or_404(Jogos, pk=s.validated_data['jogo'])
+    atleta = get_object_or_404(Atleta, pk=s.validated_data['atleta'])
+    estatisticas = get_object_or_404(EstatisticaJogo, atleta=atleta, jogo=jogo)
 
-    #buscar os objetos
-    jogo = get_object_or_404(Jogos, pk=jogo_id)
-    atleta = get_object_or_404(Atleta, pk=atleta_id)
-    
-    estatisticas = EstatisticaJogo.objects.get(atleta=atleta, jogo=jogo)
-
-    estatisticas.golos -= 1
+    estatisticas.golos = max(estatisticas.golos - 1, 0)
     estatisticas.save()
 
     if atleta.equipa == jogo.visitado:
-        jogo.golos_visitado -= 1
-        jogo.save()
+        jogo.golos_visitado = max(jogo.golos_visitado - 1, 0)
     else:
-        jogo.golos_visitante -= 1
-        jogo.save()
+        jogo.golos_visitante = max(jogo.golos_visitante - 1, 0)
+    jogo.save()
 
     return Response(serializer.GoloResponseSerializer({
         "success": True,
@@ -177,20 +179,22 @@ def anular_golo_jogador(request):
         },
         "jogo": {
             "id": jogo.id,
-            "golosVisitado": jogo.golos_visitado,
-            "golosVisitante": jogo.golos_visitante
+            "golos_visitado": jogo.golos_visitado,
+            "golos_visitante": jogo.golos_visitante
         }
-        }).data)
-# golo equipa
+    }).data)
+
+
+# -----------------------------
+# Golos da equipa
+# -----------------------------
 @api_view(['POST'])
 def golo_equipa(request):
-    serializer_ = serializer.GoloEquipaRequestSerializer(data=request.data)
-    serializer_.is_valid(raise_exception=True)
+    s = serializer.GoloEquipaRequestSerializer(data=request.data)
+    s.is_valid(raise_exception=True)
 
-    jogo_id = serializer_.validated_data['jogo']
-    equipa_id = serializer_.validated_data['equipa']
-
-    jogo = get_object_or_404(Jogos, pk=jogo_id)
+    jogo = get_object_or_404(Jogos, pk=s.validated_data['jogo'])
+    equipa_id = s.validated_data['equipa']
 
     if equipa_id == jogo.visitado.id:
         jogo.golos_visitado += 1
@@ -199,14 +203,18 @@ def golo_equipa(request):
     else:
         return Response(serializer.GoloEquipaResponseSerializer({
             "success": False,
-            "message": "Equipa inválida"
+            "status": "Equipa inválida",
+            "jogo": {
+                "id": jogo.id,
+                "golos_visitado": jogo.golos_visitado,
+                "golos_visitante": jogo.golos_visitante
+            }
         }).data)
 
     jogo.save()
-
     return Response(serializer.GoloEquipaResponseSerializer({
         "success": True,
-        "message": "Golo marcado com sucesso!",
+        "status": "Golo marcado com sucesso!",
         "jogo": {
             "id": jogo.id,
             "golos_visitado": jogo.golos_visitado,
@@ -215,61 +223,53 @@ def golo_equipa(request):
     }).data)
 
 
-## Assistencias
+# -----------------------------
+# Assistências
+# -----------------------------
 @api_view(['POST'])
 def atribuir_assistencia(request):
-    serializer_ = serializer.GoloRequestSerializer(data=request.data)
-    serializer_.is_valid(raise_exception=True)
+    s = serializer.GoloRequestSerializer(data=request.data)
+    s.is_valid(raise_exception=True)
 
-    jogo_id = serializer_.validated_data['jogo']
-    atleta_id = serializer_.validated_data['atleta']
-
-    #buscar os objetos
-    jogo = get_object_or_404(Jogos, pk=jogo_id)
-    atleta = get_object_or_404(Atleta, pk=atleta_id)
-    
-    estatisticas = EstatisticaJogo.objects.get(atleta=atleta, jogo=jogo)
+    jogo = get_object_or_404(Jogos, pk=s.validated_data['jogo'])
+    atleta = get_object_or_404(Atleta, pk=s.validated_data['atleta'])
+    estatisticas = get_object_or_404(EstatisticaJogo, atleta=atleta, jogo=jogo)
 
     estatisticas.assistencias += 1
     estatisticas.save()
 
     return Response(serializer.GoloResponseSerializer({
         "success": True,
-        "message": "Assistencia atribuida com sucesso!",
+        "message": "Assistência atribuída com sucesso!",
         "jogador": {
             "id": atleta.id,
             "golos": estatisticas.golos,
             "assistencias": estatisticas.assistencias
         }
-        }).data)
+    }).data)
+
 
 @api_view(['POST'])
 def anular_assistencia(request):
-    serializer_ = serializer.GoloRequestSerializer(data=request.data)
-    serializer_.is_valid(raise_exception=True)
+    s = serializer.GoloRequestSerializer(data=request.data)
+    s.is_valid(raise_exception=True)
 
-    jogo_id = serializer_.validated_data['jogo']
-    atleta_id = serializer_.validated_data['atleta']
+    jogo = get_object_or_404(Jogos, pk=s.validated_data['jogo'])
+    atleta = get_object_or_404(Atleta, pk=s.validated_data['atleta'])
+    estatisticas = get_object_or_404(EstatisticaJogo, atleta=atleta, jogo=jogo)
 
-    #buscar os objetos
-    jogo = get_object_or_404(Jogos, pk=jogo_id)
-    atleta = get_object_or_404(Atleta, pk=atleta_id)
-    
-    estatisticas = EstatisticaJogo.objects.get(atleta=atleta, jogo=jogo)
-
-    estatisticas.assistencias -= 1
+    estatisticas.assistencias = max(estatisticas.assistencias - 1, 0)
     estatisticas.save()
 
     return Response(serializer.GoloResponseSerializer({
         "success": True,
-        "message": "Assistencia anulada com sucesso!",
+        "message": "Assistência anulada com sucesso!",
         "jogador": {
             "id": atleta.id,
             "golos": estatisticas.golos,
             "assistencias": estatisticas.assistencias
         }
-        }).data)
-
+    }).data)
 @api_view(['POST'])
 def iniciar_jogo(request):
     serializer_ = serializer.IniciarJogoRequestSerializer(data=request.data)

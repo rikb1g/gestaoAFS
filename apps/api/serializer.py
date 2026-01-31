@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from apps.jogos.models import Jogos, EstatisticaJogo
-from apps.atletas.models import Atleta
+from .models import Jogos, Atleta, EstatisticaJogo
 
-
-class JogosEstadoSeralizer(serializers.ModelSerializer):
+# =========================
+# Serializers de Jogos
+# =========================
+class JogosEstadoSerializer(serializers.ModelSerializer):
     visitado = serializers.StringRelatedField()
     visitante = serializers.StringRelatedField()
-
-    visitado_id = serializers.SerializerMethodField()
-    visitante_id = serializers.SerializerMethodField()
+    visitado_id = serializers.IntegerField(source='visitado.id', read_only=True)
+    visitante_id = serializers.IntegerField(source='visitante.id', read_only=True)
 
     class Meta:
         model = Jogos
@@ -22,34 +22,30 @@ class JogosEstadoSeralizer(serializers.ModelSerializer):
             'visitado_id',
             'visitante_id',
         )
-    def get_visitado_id(self, obj):
-        return obj.visitado.id
 
-    def get_visitante_id(self, obj):
-        return obj.visitante.id
-
+# =========================
+# Serializers de Atletas
+# =========================
 class JogadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Atleta
-        fields = (
-            'id',
-            'nome',
-        )
-
+        fields = ('id', 'nome')
 
 class JogadoresEmCampoSerializer(serializers.ModelSerializer):
     titulares = JogadorSerializer(many=True)
     suplentes = JogadorSerializer(many=True)
-    capitao = JogadorSerializer(many=False)
+    capitao = JogadorSerializer()
 
     class Meta:
         model = Jogos
-        fields = 'titulares', 'suplentes','capitao'
+        fields = ('titulares', 'suplentes', 'capitao')
 
-    
+# =========================
+# Serializers de Estatísticas
+# =========================
 class EstatisticaJogoSerializer(serializers.ModelSerializer):
-    atleta = JogadorSerializer(many=False)
-    jogo = JogosEstadoSeralizer(many=False)
+    atleta = JogadorSerializer()
+    jogo = JogosEstadoSerializer()
 
     class Meta:
         model = EstatisticaJogo
@@ -64,45 +60,45 @@ class EstatisticaJogoSerializer(serializers.ModelSerializer):
             'em_campo',
         )
 
-
+# =========================
+# Substituição
+# =========================
 class SubstituicaoRequestSerializer(serializers.Serializer):
     jogo = serializers.IntegerField()
     atleta = serializers.IntegerField()
+
 class SubstituicaoResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField()
     status = serializers.CharField()
     total_minutos = serializers.FloatField(required=False)
     inicio = serializers.DateTimeField(required=False)
 
-#serializer para marcar golos
-#jogador
+# =========================
+# Marcar Golos
+# =========================
 class JogadorGoloSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     golos = serializers.IntegerField()
     assistencias = serializers.IntegerField()
 
-#jogo
 class JogoGoloSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     golos_visitado = serializers.IntegerField()
     golos_visitante = serializers.IntegerField()
 
-
-#serializer para marcar golos
 class GoloResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField()
     message = serializers.CharField()
     jogador = JogadorGoloSerializer()
     jogo = JogoGoloSerializer()
 
-
 class GoloRequestSerializer(serializers.Serializer):
     atleta = serializers.IntegerField()
     jogo = serializers.IntegerField()
 
-
-# golo equipa
-
+# =========================
+# Golo por Equipa
+# =========================
 class GoloEquipaRequestSerializer(serializers.Serializer):
     jogo = serializers.IntegerField()
     equipa = serializers.IntegerField()
@@ -112,13 +108,15 @@ class GoloEquipaResponseSerializer(serializers.Serializer):
     status = serializers.CharField()
     jogo = JogoGoloSerializer()
 
-
-#iniciar jogos
+# =========================
+# Iniciar Jogo
+# =========================
 class InicioJogoSerializer(serializers.Serializer):
-    id= serializers.IntegerField()
+    id = serializers.IntegerField()
     visitado = serializers.StringRelatedField()
     visitante = serializers.StringRelatedField()
     inicio = serializers.DateTimeField()
+
 class IniciarJogoRequestSerializer(serializers.Serializer):
     jogo = serializers.IntegerField()
     atletas = serializers.ListField(child=serializers.IntegerField())
@@ -128,17 +126,8 @@ class IniciarJogoResponseSerializer(serializers.Serializer):
     status = serializers.CharField()
     jogo = InicioJogoSerializer()
 
+# =========================
+# Lista de Jogos
+# =========================
 class ListaJogosSerializer(serializers.Serializer):
-    jogos = JogosEstadoSeralizer(many=True)
-    class Meta:
-        model = Jogos
-        fields = (
-            'id',
-            'visitado',
-            'visitante',
-            'golos_visitado',
-            'golos_visitante',
-            'jornada',
-            'data',
-        )
-
+    jogos = JogosEstadoSerializer(many=True)
