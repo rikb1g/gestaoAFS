@@ -12,7 +12,7 @@ from apps.api import serializer
 @api_view(['GET'])
 def estado_jogo(request, jogo_id):
     jogo = get_object_or_404(Jogos, id=jogo_id)
-    serializer_data = serializer.JogosEstadoSeralizer(jogo)
+    serializer_data = serializer.JogosEstadoSerializer(jogo)
     return Response(serializer_data.data)
 
 
