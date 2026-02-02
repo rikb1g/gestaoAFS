@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Jogos, Atleta, EstatisticaJogo
+from apps.jogos.models import Jogos, EstatisticaJogo
+from apps.atletas.models import Atleta
 
 # =========================
 # Serializers de Jogos
