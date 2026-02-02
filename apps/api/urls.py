@@ -17,4 +17,5 @@ urlpatterns = [
     path('anular_golo_jogador/', views.anular_golo_jogador, name='api_anular_golo_jogador'),
     path('atribuir_assitencia/', views.atribuir_assistencia, name='api_atribuir_assistencia'),
     path('anular_assistencia/', views.anular_assistencia, name='api_anular_assistencia'),
+    path('anular_golo_equipa/', views.anular_golo_equipa, name='api_anular_golo_equipa'),
 ]

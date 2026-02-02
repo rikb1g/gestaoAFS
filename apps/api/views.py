@@ -222,6 +222,40 @@ def golo_equipa(request):
         }
     }).data)
 
+@api_view(['POST'])
+def anular_golo_equipa(request):
+    s = serializer.GoloEquipaRequestSerializer(data=request.data)
+    s.is_valid(raise_exception=True)
+
+    jogo = get_object_or_404(Jogos, pk=s.validated_data['jogo'])
+    equipa_id = s.validated_data['equipa']
+
+    if equipa_id == jogo.visitado.id:
+        jogo.golos_visitado -= 1
+    elif equipa_id == jogo.visitante.id:
+        jogo.golos_visitante -= 1
+    else:
+        return Response(serializer.GoloEquipaResponseSerializer({
+            "success": False,
+            "status": "Equipa inválida",
+            "jogo": {
+                "id": jogo.id,
+                "golos_visitado": jogo.golos_visitado,
+                "golos_visitante": jogo.golos_visitante
+            }
+        }).data)
+
+    jogo.save()
+    return Response(serializer.GoloEquipaResponseSerializer({
+        "success": True,
+        "status": "Golo marcado com sucesso!",
+        "jogo": {
+            "id": jogo.id,
+            "golos_visitado": jogo.golos_visitado,
+            "golos_visitante": jogo.golos_visitante
+        }
+    }).data)
+
 
 # -----------------------------
 # Assistências
@@ -238,15 +272,23 @@ def atribuir_assistencia(request):
     estatisticas.assistencias += 1
     estatisticas.save()
 
-    return Response(serializer.GoloResponseSerializer({
+    response_data = {
         "success": True,
-        "message": "Assistência atribuída com sucesso!",
+        "message": "Golo marcado com sucesso!",
         "jogador": {
             "id": atleta.id,
             "golos": estatisticas.golos,
             "assistencias": estatisticas.assistencias
+        },
+        "jogo": {
+            "id": jogo.id,
+            "golos_visitado": jogo.golos_visitado,
+            "golos_visitante": jogo.golos_visitante
         }
-    }).data)
+    }
+
+    response_serializer = serializer.GoloResponseSerializer(response_data)
+    return Response(response_serializer.data)
 
 
 @api_view(['POST'])
@@ -263,11 +305,16 @@ def anular_assistencia(request):
 
     return Response(serializer.GoloResponseSerializer({
         "success": True,
-        "message": "Assistência anulada com sucesso!",
+        "message": "Golo anulado com sucesso!",
         "jogador": {
             "id": atleta.id,
             "golos": estatisticas.golos,
             "assistencias": estatisticas.assistencias
+        },
+        "jogo": {
+            "id": jogo.id,
+            "golos_visitado": jogo.golos_visitado,
+            "golos_visitante": jogo.golos_visitante
         }
     }).data)
 @api_view(['POST'])
