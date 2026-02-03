@@ -231,8 +231,28 @@ def anular_golo_equipa(request):
     equipa_id = s.validated_data['equipa']
 
     if equipa_id == jogo.visitado.id:
+        if jogo.golos_visitado == 0:
+            return Response(serializer.GoloEquipaResponseSerializer({
+                "success": False,
+                "status": "Nenhum golo marcado",
+                "jogo": {
+                    "id": jogo.id,
+                    "golos_visitado": jogo.golos_visitado,
+                    "golos_visitante": jogo.golos_visitante
+                }
+            }).data)
         jogo.golos_visitado -= 1
     elif equipa_id == jogo.visitante.id:
+        if jogo.golos_visitante == 0:
+            return Response(serializer.GoloEquipaResponseSerializer({
+                "success": False,
+                "status": "Nenhum golo marcado",
+                "jogo": {
+                    "id": jogo.id,
+                    "golos_visitado": jogo.golos_visitado,
+                    "golos_visitante": jogo.golos_visitante
+                }
+            }).data)
         jogo.golos_visitante -= 1
     else:
         return Response(serializer.GoloEquipaResponseSerializer({
@@ -300,7 +320,7 @@ def anular_assistencia(request):
     atleta = get_object_or_404(Atleta, pk=s.validated_data['atleta'])
     estatisticas = get_object_or_404(EstatisticaJogo, atleta=atleta, jogo=jogo)
 
-    estatisticas.assistencias = max(estatisticas.assistencias - 1, 0)
+    estatisticas.assistencias -= 1
     estatisticas.save()
 
     return Response(serializer.GoloResponseSerializer({

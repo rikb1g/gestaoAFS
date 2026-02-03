@@ -2,27 +2,8 @@ from rest_framework import serializers
 from apps.jogos.models import Jogos
 from apps.atletas.models import Atleta
 from apps.jogos.models import EstatisticaJogo
-# =========================
-# Serializers de Jogos
-# =========================
-class JogosEstadoSerializer(serializers.ModelSerializer):
-    visitado = serializers.StringRelatedField()
-    visitante = serializers.StringRelatedField()
-    visitado_id = serializers.IntegerField(source='visitado.id', read_only=True)
-    visitante_id = serializers.IntegerField(source='visitante.id', read_only=True)
 
-    class Meta:
-        model = Jogos
-        fields = (
-            'id',
-            'inicio_jogo',
-            'golos_visitado',
-            'golos_visitante',
-            'visitado',
-            'visitante',
-            'visitado_id',
-            'visitante_id',
-        )
+
 
 # =========================
 # Serializers de Atletas
@@ -40,6 +21,34 @@ class JogadoresEmCampoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jogos
         fields = ('titulares', 'suplentes', 'capitao')
+
+
+# =========================
+# Serializers de Jogos
+# =========================
+class JogosEstadoSerializer(serializers.ModelSerializer):
+    visitado = serializers.StringRelatedField()
+    visitante = serializers.StringRelatedField()
+    visitado_id = serializers.IntegerField(source='visitado.id', read_only=True)
+    visitante_id = serializers.IntegerField(source='visitante.id', read_only=True)
+    capitao = serializers.IntegerField(source='capitao.id', read_only=True)
+
+
+    class Meta:
+        model = Jogos
+        fields = (
+            'id',
+            'inicio_jogo',
+            'golos_visitado',
+            'golos_visitante',
+            'visitado',
+            'visitante',
+            'visitado_id',
+            'visitante_id',
+            'capitao_id',
+        )
+
+
 
 # =========================
 # Serializers de Estatísticas
